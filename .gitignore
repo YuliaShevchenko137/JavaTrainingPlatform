@@ -1,0 +1,11 @@
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+.idea
+*.iml
+gen
+out
+target

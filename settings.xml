@@ -1,0 +1,7 @@
+<settings>
+    <properties>
+        <db-url>jdbc:oracle:thin:@localhost:1521:XE</db-url>
+        <login>login</login>
+        <password>password</password>
+    </properties>
+</settings>
