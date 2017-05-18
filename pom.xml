@@ -10,7 +10,6 @@
         <module>entity-management</module>
     </modules>
     <name>java-training-platform</name>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -39,7 +38,6 @@
         <!--Testing-->
         <junit.version>4.12</junit.version>
     </properties>
-
 
     <dependencies>
         <dependency>
