@@ -8,8 +8,6 @@ import lombok.Setter;
 /**
  * Created by Клиент on 18.05.2017.
  */
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 public class ProgramClass extends Question {
