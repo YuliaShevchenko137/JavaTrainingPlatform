@@ -7,16 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Created by Клиент on 18.05.2017.
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class Test extends Question {
     @RefObjectIdAttr
-    TestType type;
+    private TestType type;
     @XmlAttr
-    String content;
+    private String content;
 }

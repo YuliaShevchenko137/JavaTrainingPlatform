@@ -10,20 +10,17 @@ import lombok.Setter;
 
 import java.math.BigInteger;
 
-/**
- * Created by Клиент on 18.05.2017.
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class User  implements Entity{
     @IntegerAttr
-    BigInteger id;
+    private BigInteger id;
     @StringAttr
-    String name;
+    private String name;
     @StringAttr
-    String password;
+    private String password;
     @RefObjectIdAttr
-    Role role;
+    private Role role;
 }

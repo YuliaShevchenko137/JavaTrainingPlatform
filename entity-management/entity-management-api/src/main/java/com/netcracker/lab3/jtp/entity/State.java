@@ -9,16 +9,13 @@ import lombok.Setter;
 
 import java.math.BigInteger;
 
-/**
- * Created by Клиент on 18.05.2017.
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class State  implements Entity{
     @IntegerAttr
-    int id;
+    private BigInteger id;
     @StringAttr
-    String name;
+    private String name;
 }

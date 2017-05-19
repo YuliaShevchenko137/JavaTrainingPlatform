@@ -9,20 +9,17 @@ import lombok.Setter;
 
 import java.math.BigInteger;
 
-/**
- * Created by Клиент on 18.05.2017.
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class Evaluating implements Entity {
     @IntegerAttr
-    BigInteger id;
+    private BigInteger id;
     @IntegerAttr
-    BigInteger userId;
+    private BigInteger userId;
     @IntegerAttr
-    BigInteger taskId;
+    private BigInteger taskId;
     @DecimalAttr
-    double point;
+    private double point;
 }

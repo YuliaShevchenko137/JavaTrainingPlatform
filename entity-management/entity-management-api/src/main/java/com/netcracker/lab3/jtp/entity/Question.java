@@ -8,18 +8,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Created by Клиент on 18.05.2017.
- */
+import java.math.BigInteger;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class Question  extends DBObject {
     @StringAttr
-    String question;
+    private String questionText;
     @DecimalAttr
-    double point;
+    private double point;
     @IntegerAttr
-    int order;
+    private BigInteger order;
 }

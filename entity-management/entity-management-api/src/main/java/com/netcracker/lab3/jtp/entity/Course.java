@@ -8,21 +8,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
-/**
- * Created by Клиент on 18.05.2017.
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class Course  extends DBObject{
     @DateAttr
-    Calendar endDate;
+    private Calendar endDate;
     @DateAttr
-    Calendar beginDate;
+    private Calendar beginDate;
     @ListAttr
-    ArrayList<BigInteger> userList;
+    private List<BigInteger> userList;
 }

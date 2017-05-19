@@ -7,16 +7,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Created by Клиент on 18.05.2017.
- */
+import java.math.BigInteger;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class Role  implements Entity{
     @IntegerAttr
-    int id;
+    private BigInteger id;
     @StringAttr
-    String name;
+    private String name;
 }

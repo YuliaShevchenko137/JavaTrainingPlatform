@@ -8,16 +8,13 @@ import lombok.Setter;
 
 import java.util.Calendar;
 
-/**
- * Created by Клиент on 18.05.2017.
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class Task extends DBObject {
     @DateAttr
-    Calendar endDate;
+    private Calendar endDate;
     @DateAttr
-    Calendar beginDate;
+    private Calendar beginDate;
 }

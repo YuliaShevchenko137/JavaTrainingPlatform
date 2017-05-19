@@ -18,15 +18,15 @@ import java.util.Calendar;
 @Setter
 public class DBObject implements Entity{
     @IntegerAttr
-    BigInteger id;
+    private BigInteger id;
     @StringAttr
-    String name;
+    private String name;
     @StringAttr
-    String description;
+    private String description;
     @DateAttr
-    Calendar creation_date;
+    private Calendar creationDate;
     @IntegerAttr
-    BigInteger creator;
+    private BigInteger creatorId;
     @RefObjectIdAttr
-    State state;
+    private State state;
 }

@@ -9,20 +9,17 @@ import lombok.Setter;
 
 import java.math.BigInteger;
 
-/**
- * Created by Клиент on 18.05.2017.
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Answer extends DBObject{
+public class Answer extends DBObject {
     @XmlAttr
-    String answer;
+    private String correctAnswer;
 
     @IntegerAttr
-    BigInteger test;
+    private BigInteger testId;
 
     @IntegerAttr
-    BigInteger user;
+    private BigInteger userId;
 }
