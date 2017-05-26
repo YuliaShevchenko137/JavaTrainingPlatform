@@ -1,6 +1,7 @@
 package com.netcracker.lab3.jtp.entity;
 
-import com.netcracker.lab3.jtp.annotations.DateAttr;
+import com.netcracker.lab3.jtp.annotations.Attribute;
+import com.netcracker.lab3.jtp.annotations.AttributeType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,8 @@ import java.util.Calendar;
 @Getter
 @Setter
 public class Task extends DBObject {
-    @DateAttr
+    @Attribute(AttributeType.Date)
     private Calendar endDate;
-    @DateAttr
+    @Attribute(AttributeType.Date)
     private Calendar beginDate;
 }

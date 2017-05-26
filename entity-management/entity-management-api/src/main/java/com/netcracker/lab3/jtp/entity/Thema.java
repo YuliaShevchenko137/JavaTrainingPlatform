@@ -5,5 +5,5 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Thema extends DBObject{
+public class Thema extends DBObject {
 }

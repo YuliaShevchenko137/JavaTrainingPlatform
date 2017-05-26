@@ -1,5 +1,6 @@
 package com.netcracker.lab3.jtp.entity;
 
+import com.netcracker.lab3.jtp.annotations.DBObjectType;
 import com.netcracker.lab3.jtp.annotations.DateAttr;
 import com.netcracker.lab3.jtp.annotations.IntegerAttr;
 import com.netcracker.lab3.jtp.annotations.RefObjectIdAttr;
@@ -16,7 +17,8 @@ import java.util.Calendar;
 @NoArgsConstructor
 @Getter
 @Setter
-public class DBObject implements Entity{
+@DBObjectType
+public class DBObject implements Entity {
     @IntegerAttr
     private BigInteger id;
     @StringAttr

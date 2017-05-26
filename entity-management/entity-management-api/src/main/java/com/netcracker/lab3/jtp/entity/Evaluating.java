@@ -1,7 +1,7 @@
 package com.netcracker.lab3.jtp.entity;
 
-import com.netcracker.lab3.jtp.annotations.DecimalAttr;
-import com.netcracker.lab3.jtp.annotations.IntegerAttr;
+import com.netcracker.lab3.jtp.annotations.Attribute;
+import com.netcracker.lab3.jtp.annotations.AttributeType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +13,13 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Evaluating implements Entity {
-    @IntegerAttr
+public class Evaluating extends EntityImpl {
+    @Attribute(AttributeType.Integer)
     private BigInteger id;
-    @IntegerAttr
+    @Attribute(AttributeType.Integer)
     private BigInteger userId;
-    @IntegerAttr
+    @Attribute(AttributeType.Integer)
     private BigInteger taskId;
-    @DecimalAttr
+    @Attribute(AttributeType.Decimal)
     private double point;
 }

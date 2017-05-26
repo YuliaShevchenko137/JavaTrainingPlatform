@@ -1,7 +1,7 @@
 package com.netcracker.lab3.jtp.entity;
 
-import com.netcracker.lab3.jtp.annotations.IntegerAttr;
-import com.netcracker.lab3.jtp.annotations.XmlAttr;
+import com.netcracker.lab3.jtp.annotations.Attribute;
+import com.netcracker.lab3.jtp.annotations.AttributeType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,12 +14,12 @@ import java.math.BigInteger;
 @Getter
 @Setter
 public class Answer extends DBObject {
-    @XmlAttr
+    @Attribute(AttributeType.XML)
     private String correctAnswer;
 
-    @IntegerAttr
+    @Attribute(AttributeType.Integer)
     private BigInteger testId;
 
-    @IntegerAttr
+    @Attribute(AttributeType.Integer)
     private BigInteger userId;
 }

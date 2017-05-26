@@ -1,24 +1,24 @@
 package com.netcracker.lab3.jtp.entity;
 
-import com.netcracker.lab3.jtp.annotations.DecimalAttr;
-import com.netcracker.lab3.jtp.annotations.IntegerAttr;
-import com.netcracker.lab3.jtp.annotations.StringAttr;
+import com.netcracker.lab3.jtp.annotations.Attribute;
+import com.netcracker.lab3.jtp.annotations.AttributeType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Question  extends DBObject {
-    @StringAttr
+public class Question extends DBObject {
+    @Attribute(AttributeType.String)
     private String questionText;
-    @DecimalAttr
-    private double point;
-    @IntegerAttr
+    @Attribute(AttributeType.Decimal)
+    private BigDecimal point;
+    @Attribute(AttributeType.Integer)
     private BigInteger order;
 }

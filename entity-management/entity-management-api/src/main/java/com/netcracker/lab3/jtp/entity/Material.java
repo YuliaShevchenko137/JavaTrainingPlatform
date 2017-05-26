@@ -1,7 +1,7 @@
 package com.netcracker.lab3.jtp.entity;
 
-import com.netcracker.lab3.jtp.annotations.DataAttr;
-import com.netcracker.lab3.jtp.annotations.StringAttr;
+import com.netcracker.lab3.jtp.annotations.Attribute;
+import com.netcracker.lab3.jtp.annotations.AttributeType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +13,9 @@ import java.sql.Blob;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Material  extends DBObject{
-    @StringAttr
+public class Material extends DBObject {
+    @Attribute(AttributeType.String)
     private String type;
-    @DataAttr
+    @Attribute(AttributeType.Data)
     private Blob data;
 }

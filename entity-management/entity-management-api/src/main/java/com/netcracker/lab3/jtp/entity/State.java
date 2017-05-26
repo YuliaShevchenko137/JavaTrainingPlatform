@@ -1,7 +1,7 @@
 package com.netcracker.lab3.jtp.entity;
 
-import com.netcracker.lab3.jtp.annotations.IntegerAttr;
-import com.netcracker.lab3.jtp.annotations.StringAttr;
+import com.netcracker.lab3.jtp.annotations.Attribute;
+import com.netcracker.lab3.jtp.annotations.AttributeType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +13,9 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @Getter
 @Setter
-public class State  implements Entity{
-    @IntegerAttr
+public class State extends EntityImpl {
+    @Attribute(AttributeType.Integer)
     private BigInteger id;
-    @StringAttr
+    @Attribute(AttributeType.String)
     private String name;
 }
