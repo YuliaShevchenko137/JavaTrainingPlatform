@@ -1,0 +1,80 @@
+<dataset>
+    <object_types object_type_id="1" name="DBObject" parent_id="null"/>
+    <object_types object_type_id="12" name="course" parent_id="1"/>
+    <object_types object_type_id="13" name="task" parent_id="1"/>
+    <object_types object_type_id="14" name="thema" parent_id="1"/>
+    <object_types object_type_id="15" name="question" parent_id="1"/>
+    <object_types object_type_id="151" name="test" parent_id="15"/>
+    <object_types object_type_id="152" name="program_class" parent_id="15"/>
+    <object_types object_type_id="16" name="material" parent_id="1"/>
+    <object_types object_type_id="17" name="answer" parent_id="1"/>
+    <object_types object_type_id="2" name="states" parent_id="null"/>
+    <object_types object_type_id="3" name="test_type" parent_id="null"/>
+    <object_types object_type_id="4" name="role" parent_id="null"/>
+    <object_types object_type_id="5" name="user" parent_id="null"/>
+    <object_types object_type_id="6" name="evaluating" parent_id="null"/>
+    <object_types object_type_id="7" name="material_type" parent_id="null"/>
+
+    <attribute_types type_name="integer"/>
+    <attribute_types type_name="decimal"/>
+    <attribute_types type_name="string"/>
+    <attribute_types type_name="xml"/>
+    <attribute_types type_name="date"/>
+    <attribute_types type_name="list"/>
+    <attribute_types type_name="references_object"/>
+    <attribute_types type_name="references_param"/>
+    <attribute_types type_name="data"/>
+
+    <attributes attribute_id="1001" name="description" type_name="string"/>
+    <attributes attribute_id="1002" name="creation_date" type_name="date"/>
+    <attributes attribute_id="1003" name="creator" type_name="references_object"/>
+    <attributes attribute_id="1004" name="state" type_name="references_object"/>
+    <attributes attribute_id="1005" name="name" type_name="string"/>
+    <attributes attribute_id="1006" name="end_date" type_name="date"/>
+    <attributes attribute_id="1007" name="begin_date" type_name="date"/>
+    <attributes attribute_id="1008" name="user_list" type_name="list"/>
+    <attributes attribute_id="1009" name="question" type_name="string"/>
+    <attributes attribute_id="1010" name="point" type_name="integer"/>
+    <attributes attribute_id="1011" name="order" type_name="integer"/>
+    <attributes attribute_id="1012" name="test_list" type_name="list"/>
+    <attributes attribute_id="1013" name="type" type_name="references_object"/>
+    <attributes attribute_id="1014" name="content" type_name="xml"/>
+    <attributes attribute_id="1015" name="type" type_name="references_object"/>
+    <attributes attribute_id="1016" name="data" type_name="data"/>
+    <attributes attribute_id="1017" name="answer" type_name="string"/>
+    <attributes attribute_id="1018" name="user" type_name="references_object"/>
+    <attributes attribute_id="1019" name="test" type_name="references_object"/>
+    <attributes attribute_id="1020" name="password" type_name="string"/>
+    <attributes attribute_id="1021" name="role" type_name="references_object"/>
+    <attributes attribute_id="1022" name="list_integer" type_name="integer"/>
+    <attributes attribute_id="1023" name="list_references_object" type_name="references_object"/>
+
+    <object_type_attributes object_type_id="1" attribute_id="1001"/>
+    <object_type_attributes object_type_id="1" attribute_id="1002"/>
+    <object_type_attributes object_type_id="1" attribute_id="1003"/>
+    <object_type_attributes object_type_id="1" attribute_id="1004"/>
+    <object_type_attributes object_type_id="1" attribute_id="1005"/>
+    <object_type_attributes object_type_id="13" attribute_id="1006"/>
+    <object_type_attributes object_type_id="13" attribute_id="1007"/>
+    <object_type_attributes object_type_id="12" attribute_id="1006"/>
+    <object_type_attributes object_type_id="12" attribute_id="1007"/>
+    <object_type_attributes object_type_id="12" attribute_id="1008"/>
+    <object_type_attributes object_type_id="15" attribute_id="1009"/>
+    <object_type_attributes object_type_id="15" attribute_id="1010"/>
+    <object_type_attributes object_type_id="15" attribute_id="1011"/>
+    <object_type_attributes object_type_id="151" attribute_id="1013"/>
+    <object_type_attributes object_type_id="151" attribute_id="1014"/>
+    <object_type_attributes object_type_id="152" attribute_id="1012"/>
+    <object_type_attributes object_type_id="16" attribute_id="1015"/>
+    <object_type_attributes object_type_id="16" attribute_id="1016"/>
+    <object_type_attributes object_type_id="17" attribute_id="1017"/>
+    <object_type_attributes object_type_id="17" attribute_id="1018"/>
+    <object_type_attributes object_type_id="17" attribute_id="1019"/>
+    <object_type_attributes object_type_id="2" attribute_id="1005"/>
+    <object_type_attributes object_type_id="3" attribute_id="1005"/>
+    <object_type_attributes object_type_id="4" attribute_id="1005"/>
+    <object_type_attributes object_type_id="7" attribute_id="1005"/>
+    <object_type_attributes object_type_id="5" attribute_id="1005"/>
+    <object_type_attributes object_type_id="5" attribute_id="1020"/>
+    <object_type_attributes object_type_id="5" attribute_id="1021"/>
+</dataset>
