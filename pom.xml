@@ -8,7 +8,6 @@
     <modules>
         <module>database</module>
         <module>entity-management</module>
-        <module>web</module>
     </modules>
     <name>java-training-platform</name>
     <parent>
@@ -33,8 +32,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <lombok.version>1.16.14</lombok.version>
-        <springjdbc.version>4.3.8.RELEASE</springjdbc.version>
-        <ojdbc.version>12.1.0.2</ojdbc.version>
+        <jdbc.version>4.3.8.RELEASE</jdbc.version>
         <!--Code Style-->
         <pmd.version>3.8</pmd.version>
         <checkstyle.version>2.17</checkstyle.version>
@@ -84,13 +82,9 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>${springjdbc.version}</version>
+            <version>${jdbc.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.noraui</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>${ojdbc.version}</version>
-        </dependency>
+
     </dependencies>
 
     <build>
