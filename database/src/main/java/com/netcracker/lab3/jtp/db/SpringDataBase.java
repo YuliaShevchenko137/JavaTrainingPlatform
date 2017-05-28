@@ -1,6 +1,9 @@
 package com.netcracker.lab3.jtp.db;
 
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -10,17 +13,24 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+@Slf4j
 public class SpringDataBase implements DAO{
-    final private DataSource dataSource;
+    private DataSource dataSource;
     final private JdbcTemplate jdbcTemplateObject;
 
-    public SpringDataBase(){   // change to using bean
-        dataSource = new DriverManagerDataSource("oracle.jdbc.driver.OracleDriver", "javal3test", "javal3test");
+    public SpringDataBase(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("Beans/DataBaseBeans.xml");
+        dataSource = (DriverManagerDataSource) context.getBean("DataSource");
         jdbcTemplateObject = new JdbcTemplate(dataSource);
     }
 
-    public SpringDataBase(String url, String username, String password){
-        dataSource = new DriverManagerDataSource(url, username, password);
+    public SpringDataBase(DataSource dataSource){
+        jdbcTemplateObject = new JdbcTemplate(dataSource);
+    }
+
+    public SpringDataBase(String beanName){
+        ApplicationContext context = new ClassPathXmlApplicationContext("Beans/DataBaseBeans.xml");
+        dataSource = (DataSource) context.getBean(beanName);
         jdbcTemplateObject = new JdbcTemplate(dataSource);
     }
 
@@ -30,7 +40,7 @@ public class SpringDataBase implements DAO{
         try {
             con = dataSource.getConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.debug(e.getMessage());
         }
         return con;
     }
@@ -55,7 +65,7 @@ public class SpringDataBase implements DAO{
         try {
             dataSource.getConnection().close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.debug(e.getMessage());
         }
     }
 
@@ -64,7 +74,7 @@ public class SpringDataBase implements DAO{
         try {
             dataSource.getConnection().setAutoCommit(isAuto);
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.debug(e.getMessage());
         }
     }
 
@@ -73,7 +83,7 @@ public class SpringDataBase implements DAO{
         try {
             dataSource.getConnection().commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.debug(e.getMessage());
         }
     }
 
@@ -82,7 +92,7 @@ public class SpringDataBase implements DAO{
         try {
             dataSource.getConnection().rollback();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.debug(e.getMessage());
         }
     }
 }
