@@ -7,7 +7,7 @@ public enum AttributeType {
     Decimal,
     Integer,
     List,
-    ObjectReferenses,
-    ParameterReferenses,
+    Object,
+    Parameter,
     XML;
 }

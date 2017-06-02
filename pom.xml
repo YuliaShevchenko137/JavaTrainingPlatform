@@ -36,6 +36,7 @@
         <springjdbc.version>4.3.8.RELEASE</springjdbc.version>
         <ojdbc.version>12.1.0.2</ojdbc.version>
         <h2.version>1.4.195</h2.version>
+        <auto-service.version>1.0-rc2</auto-service.version>
         <!--Code Style-->
         <pmd.version>3.8</pmd.version>
         <checkstyle.version>2.17</checkstyle.version>
@@ -96,6 +97,17 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${liquibase-maven-plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>${auto-service.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

@@ -1,10 +1,6 @@
 package com.netcracker.lab3.jtp.entity;
 
-import com.netcracker.lab3.jtp.annotations.DBObjectType;
-import com.netcracker.lab3.jtp.annotations.DateAttr;
-import com.netcracker.lab3.jtp.annotations.IntegerAttr;
-import com.netcracker.lab3.jtp.annotations.RefObjectIdAttr;
-import com.netcracker.lab3.jtp.annotations.StringAttr;
+import com.netcracker.lab3.jtp.annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,18 +13,16 @@ import java.util.Calendar;
 @NoArgsConstructor
 @Getter
 @Setter
-@DBObjectType
-public class DBObject implements Entity {
-    @IntegerAttr
-    private BigInteger id;
-    @StringAttr
+@DBObjectType(id = 11)
+public class DBObject extends EntityImpl {
+    @Attribute(AttributeType.String)
     private String name;
-    @StringAttr
+    @Attribute(AttributeType.String)
     private String description;
-    @DateAttr
+    @Attribute(AttributeType.Data)
     private Calendar creationDate;
-    @IntegerAttr
+    @Attribute(AttributeType.Integer)
     private BigInteger creatorId;
-    @RefObjectIdAttr
+    @Attribute(AttributeType.Object)
     private State state;
 }

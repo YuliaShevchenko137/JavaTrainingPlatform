@@ -18,6 +18,11 @@
             <artifactId>entity-management-api</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.netcracker.lab3.javaplatform</groupId>
+            <artifactId>database</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
 </project>

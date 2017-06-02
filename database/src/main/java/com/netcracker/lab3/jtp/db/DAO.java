@@ -10,6 +10,8 @@ public interface DAO {
 
     void execute(String request);
 
+    void executeLiquibase(String path);
+
     Object executeObjectQuery(String request, RowMapper rowMapper);
 
     List executeListQuery(String request, RowMapper rowMapper);

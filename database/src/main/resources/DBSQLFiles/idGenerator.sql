@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset javal3:2
+--changeset javal3:3
 CREATE SEQUENCE additional_number
  START WITH     1
  INCREMENT BY   1

@@ -2,6 +2,7 @@ package com.netcracker.lab3.jtp.entity;
 
 import com.netcracker.lab3.jtp.annotations.Attribute;
 import com.netcracker.lab3.jtp.annotations.AttributeType;
+import com.netcracker.lab3.jtp.annotations.DBObjectType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@DBObjectType(id = 13)
 public class Course extends DBObject {
     @Attribute(AttributeType.Date)
     private Calendar endDate;

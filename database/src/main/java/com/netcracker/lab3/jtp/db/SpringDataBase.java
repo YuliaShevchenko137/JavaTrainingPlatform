@@ -1,6 +1,13 @@
 package com.netcracker.lab3.jtp.db;
 
 
+import liquibase.Liquibase;
+import liquibase.database.Database;
+import liquibase.database.DatabaseFactory;
+import liquibase.database.jvm.JdbcConnection;
+import liquibase.exception.DatabaseException;
+import liquibase.exception.LiquibaseException;
+import liquibase.resource.ClassLoaderResourceAccessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -48,6 +55,21 @@ public class SpringDataBase implements DAO{
     @Override
     public void execute(String request) {
         jdbcTemplateObject.execute(request);
+    }
+
+    @Override
+    public void executeLiquibase(String path) {
+        try {
+            Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(dataSource.getConnection()));
+            Liquibase liquibase = new Liquibase("src/main/resources/DBSQLFiles/" + path +".xml", new ClassLoaderResourceAccessor(), database);
+            liquibase.update("v 1.0");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        } catch (LiquibaseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

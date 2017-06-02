@@ -2,6 +2,7 @@ package com.netcracker.lab3.jtp.entity;
 
 import com.netcracker.lab3.jtp.annotations.Attribute;
 import com.netcracker.lab3.jtp.annotations.AttributeType;
+import com.netcracker.lab3.jtp.annotations.DBObjectType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @Getter
 @Setter
+@DBObjectType(id = 17)
 public class Question extends DBObject {
     @Attribute(AttributeType.String)
     private String questionText;
