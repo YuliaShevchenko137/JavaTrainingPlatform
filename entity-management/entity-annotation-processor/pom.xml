@@ -8,13 +8,25 @@
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>jar</packaging>
-    <artifactId>entity-management-api</artifactId>
+
+    <artifactId>entity-annotation-processor</artifactId>
+
 
     <dependencies>
         <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>${auto-service.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.netcracker.lab3.javaplatform</groupId>
-            <artifactId>entity-annotation-processor</artifactId>
+            <artifactId>entity-annotation-processor-enum</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.netcracker.lab3.javaplatform</groupId>
+            <artifactId>database</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>
@@ -23,11 +35,21 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <compilerArgument>-proc:none</compilerArgument>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${maven-jar-plugin.version}</version>
                 <configuration>
                     <excludes>
-                        <exclude>com.netcracker.lab3.jtp.annotation.processors.EntityAnnotationProcessor</exclude>
+                        <exclude>com.netcracker.lab3.jtp.annotation.processors.ParameterTypeAnnotationProcessor</exclude>
                     </excludes>
                 </configuration>
                 <inherited>true</inherited>
@@ -47,7 +69,7 @@
                         <inherited>true</inherited>
                         <configuration>
                             <includes>
-                                <include>com.netcracker.lab3.jtp.annotation.processors.EntityAnnotationProcessor</include>
+                                <include>com.netcracker.lab3.jtp.annotation.processors.ParameterTypeAnnotationProcessor</include>
                             </includes>
                         </configuration>
                     </execution>
@@ -60,7 +82,7 @@
                         <inherited>false</inherited>
                         <configuration>
                             <excludes>
-                                <exclude>com.netcracker.lab3.jtp.annotation.processors.EntityAnnotationProcessor</exclude>
+                                <exclude>com.netcracker.lab3.jtp.annotation.processors.ParameterTypeAnnotationProcessor</exclude>
                             </excludes>
                         </configuration>
                     </execution>
@@ -79,7 +101,7 @@
                         <phase>compile</phase>
                         <configuration>
                             <processors>
-                                <processor>com.netcracker.lab3.jtp.annotation.processors.EntityAnnotationProcessor</processor>
+                                <processor>com.netcracker.lab3.jtp.annotation.processors.ParameterTypeAnnotationProcessor</processor>
                             </processors>
                         </configuration>
                     </execution>

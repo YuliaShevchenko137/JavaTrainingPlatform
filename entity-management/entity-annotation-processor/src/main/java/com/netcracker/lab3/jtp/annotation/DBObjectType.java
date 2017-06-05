@@ -1,4 +1,4 @@
-package com.netcracker.lab3.jtp.annotations;
+package com.netcracker.lab3.jtp.annotation;
 
 import java.lang.annotation.*;
 

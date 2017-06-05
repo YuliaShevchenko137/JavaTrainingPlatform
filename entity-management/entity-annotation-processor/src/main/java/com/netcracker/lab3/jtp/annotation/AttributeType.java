@@ -1,5 +1,6 @@
-package com.netcracker.lab3.jtp.annotations;
+package com.netcracker.lab3.jtp.annotation;
 
+@DBParameterType
 public enum AttributeType {
     String,
     Data,

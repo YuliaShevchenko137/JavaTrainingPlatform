@@ -1,9 +1,9 @@
 package com.netcracker.lab3.jtp.impl;
 
 import com.netcracker.lab3.jtp.*;
-import com.netcracker.lab3.jtp.annotations.Attribute;
-import com.netcracker.lab3.jtp.annotations.AttributeType;
-import com.netcracker.lab3.jtp.annotations.DBObjectType;
+import com.netcracker.lab3.jtp.annotation.Attribute;
+import com.netcracker.lab3.jtp.annotation.AttributeType;
+import com.netcracker.lab3.jtp.annotation.DBObjectType;
 import com.netcracker.lab3.jtp.api.EntityManager;
 import com.netcracker.lab3.jtp.db.KeyGenerator;
 import com.netcracker.lab3.jtp.db.SpringDataBase;
@@ -26,7 +26,6 @@ import static java.util.Objects.isNull;
 
 @Slf4j
 public class EntityManagerImpl implements EntityManager {
-    private static final BigInteger SERVER_NUMBER = new BigInteger("123456");
     SpringDataBase dataBase;
 
     public  EntityManagerImpl(){
@@ -165,7 +164,7 @@ public class EntityManagerImpl implements EntityManager {
 
     @Override
     public void insert(Entity entity) {
-        dataBase.execute("insert into objects values(" + KeyGenerator.generate(SERVER_NUMBER) + "," +
+        dataBase.execute("insert into objects values(" + KeyGenerator.generate() + "," +
                 entity.getObjectTypeId() + "," +
                 entity.getParentId() + ")");
         ArrayList<Field> fields = new ArrayList<>(entity.getFields());
@@ -178,7 +177,7 @@ public class EntityManagerImpl implements EntityManager {
         DataConverter converter = new DataConverter();
         String request = "insert into params(param_id, object_id, attribute_id, "
                 + field.getAnnotation(Attribute.class).value().name() + "_value) values(" +
-                KeyGenerator.generate(SERVER_NUMBER) + ")," +
+                KeyGenerator.generate() + ")," +
                 entity.getId() + "," +
                 "(select attribute_id from attributes where name = '" + field.getName() + "' and type_name = '" +
                 field.getAnnotation(Attribute.class).value().name() + "'),";
@@ -197,7 +196,7 @@ public class EntityManagerImpl implements EntityManager {
         BigInteger id;
         DataConverter converter = new DataConverter();
         for (int i = 0; i < list.size(); i++) {
-            id = KeyGenerator.generate(SERVER_NUMBER);
+            id = KeyGenerator.generate();
             dataBase.execute("insert into LIST_TYPE values(" + id + ", " + converter.convertToData(list.get(i)) + "," +
                     "(select attribute_id from attributes where name = 'list' and type_name = '" +
                     list.get(i).getClass().getName() + "'))");

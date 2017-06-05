@@ -1,7 +1,7 @@
 package com.netcracker.lab3.jtp;
 
-import com.netcracker.lab3.jtp.annotations.Attribute;
-import com.netcracker.lab3.jtp.annotations.AttributeType;
+import com.netcracker.lab3.jtp.annotation.Attribute;
+import com.netcracker.lab3.jtp.annotation.AttributeType;
 import com.netcracker.lab3.jtp.entity.Entity;
 import com.netcracker.lab3.jtp.impl.EntityManagerImpl;
 import lombok.NoArgsConstructor;

@@ -12,7 +12,6 @@
     <artifactId>entity-management-impl</artifactId>
 
     <dependencies>
-        <!--inner-dependencies-->
         <dependency>
             <groupId>com.netcracker.lab3.javaplatform</groupId>
             <artifactId>entity-management-api</artifactId>

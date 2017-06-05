@@ -14,6 +14,8 @@
     <modules>
         <module>entity-management-api</module>
         <module>entity-management-impl</module>
+        <module>entity-annotation-processor</module>
+        <module>entity-annotation-processor-enum</module>
     </modules>
 
 

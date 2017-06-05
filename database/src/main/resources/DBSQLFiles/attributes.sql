@@ -1,0 +1,25 @@
+--liquibase formatted sql
+
+--changeset javal3:7
+
+insert into ATTRIBUTES values(12345614966793933977,'description','String')
+insert into ATTRIBUTES values(123456149667939340014,'type','String')
+insert into ATTRIBUTES values(12345614966793933965,'userList','List')
+insert into ATTRIBUTES values(123456149667939340523,'type','Object')
+insert into ATTRIBUTES values(123456149667939340728,'role','Object')
+insert into ATTRIBUTES values(123456149667939340015,'data','Data')
+insert into ATTRIBUTES values(12345614966793933952,'userId','Integer')
+insert into ATTRIBUTES values(12345614966793933953,'endDate','Date')
+insert into ATTRIBUTES values(12345614966793933966,'name','String')
+insert into ATTRIBUTES values(12345614966793933964,'beginDate','Date')
+insert into ATTRIBUTES values(123456149667939340116,'questionText','String')
+insert into ATTRIBUTES values(123456149667939340524,'content','String')
+insert into ATTRIBUTES values(123456149667939340727,'password','String')
+insert into ATTRIBUTES values(12345614966793933989,'creatorId','Integer')
+insert into ATTRIBUTES values(123456149667939339912,'taskId','Integer')
+insert into ATTRIBUTES values(123456149667939340013,'point','Decimal')
+insert into ATTRIBUTES values(12345614966793933941,'testId','Integer')
+insert into ATTRIBUTES values(12345614966793933988,'creationDate','Data')
+insert into ATTRIBUTES values(12345614966793933940,'correctAnswer','XML')
+insert into ATTRIBUTES values(123456149667939339810,'state','Object')
+insert into ATTRIBUTES values(123456149667939340218,'order','Integer')

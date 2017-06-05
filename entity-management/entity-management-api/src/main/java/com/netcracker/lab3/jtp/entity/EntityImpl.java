@@ -1,6 +1,6 @@
 package com.netcracker.lab3.jtp.entity;
 
-import com.netcracker.lab3.jtp.annotations.DBObjectType;
+import com.netcracker.lab3.jtp.annotation.DBObjectType;
 import lombok.NoArgsConstructor;
 
 import java.lang.reflect.Field;
