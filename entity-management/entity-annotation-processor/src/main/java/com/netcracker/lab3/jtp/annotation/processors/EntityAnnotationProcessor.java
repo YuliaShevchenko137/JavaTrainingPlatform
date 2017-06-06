@@ -66,7 +66,7 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
                         DBObjectType parent = supertypeElement.getAnnotation(DBObjectType.class);
                         typeWriter.write("insert into OBJECT_TYPES values(" + objectType.id() + ",'" +
                                 element.getSimpleName() + "',"
-                                + (isNull(parent) ? null : parent.id()) + ")\n");
+                                + (isNull(parent) ? null : parent.id()) + ");\n");
                         typeWriter.flush();
                         List<? extends Element> list =  anClass.getEnclosedElements();
                         for (int i = 0; i < list.size(); i++) {
@@ -93,7 +93,7 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
         for (DBAttribute attribute: attributes) {
             try {
                 attributeWriter.write("insert into ATTRIBUTES values(" + attribute.getId() + ",'" +
-                        attribute.getName() + "','" + attribute.getType() + "')\n");
+                        attribute.getName() + "','" + attribute.getType() + "');\n");
                 attributeWriter.flush();
             } catch (IOException e) {
                 log.error(e.getMessage());

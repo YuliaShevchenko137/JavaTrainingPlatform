@@ -46,7 +46,8 @@ public class ParameterTypeAnnotationProcessor extends AbstractProcessor {
                 for (int i = 0; i < enumParameters.size(); i++) {
                     if (enumParameters.get(i).getKind().equals(ElementKind.ENUM_CONSTANT)) {
                         try {
-                            parameterTypeWriter.write("insert into ATTRIBUTE_TYPES values('" + enumParameters.get(i).getSimpleName() + "')\n");
+                            parameterTypeWriter.write("insert into ATTRIBUTE_TYPES values('" +
+                                    enumParameters.get(i).getSimpleName() + "');\n");
                             parameterTypeWriter.flush();
                         } catch (IOException ex) {
                             log.error(ex.getMessage());

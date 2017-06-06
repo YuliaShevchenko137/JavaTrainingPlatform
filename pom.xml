@@ -26,6 +26,7 @@
         <maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
         <maven-processor-plugin.version>2.2.4</maven-processor-plugin.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
         <versioneye-maven-plugin.version>3.11.2</versioneye-maven-plugin.version>
         <liquibase-maven-plugin.version>3.5.3</liquibase-maven-plugin.version>
         <!--Logging-->
