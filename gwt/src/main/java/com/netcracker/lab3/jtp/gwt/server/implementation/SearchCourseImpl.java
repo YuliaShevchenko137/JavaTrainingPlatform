@@ -1,4 +1,4 @@
-package com.netcracker.lab3.jtp.gwt.serverImp;
+package com.netcracker.lab3.jtp.gwt.server.implementation;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.netcracker.lab3.jtp.gwt.server.SearchCourse;
