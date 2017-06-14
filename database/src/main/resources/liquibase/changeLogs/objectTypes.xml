@@ -1,0 +1,85 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.8"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.8
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd">
+
+	<property name="author" value="javal3"/>
+	<changeSet author="${author}" id="insert into OBJECT_TYPES">
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="12"/>
+			<column name="NAME" value="Answer"/>
+			<column name="PARENT_ID" value="11"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="13"/>
+			<column name="NAME" value="Course"/>
+			<column name="PARENT_ID" value="11"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="11"/>
+			<column name="NAME" value="DBObject"/>
+			<column name="PARENT_ID" value="10"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="10"/>
+			<column name="NAME" value="EntityImpl"/>
+			<column name="PARENT_ID" value="null"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="14"/>
+			<column name="NAME" value="Evaluating"/>
+			<column name="PARENT_ID" value="10"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="15"/>
+			<column name="NAME" value="Material"/>
+			<column name="PARENT_ID" value="11"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="16"/>
+			<column name="NAME" value="ProgramClass"/>
+			<column name="PARENT_ID" value="17"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="17"/>
+			<column name="NAME" value="Question"/>
+			<column name="PARENT_ID" value="11"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="18"/>
+			<column name="NAME" value="Role"/>
+			<column name="PARENT_ID" value="10"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="19"/>
+			<column name="NAME" value="State"/>
+			<column name="PARENT_ID" value="10"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="20"/>
+			<column name="NAME" value="Task"/>
+			<column name="PARENT_ID" value="11"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="21"/>
+			<column name="NAME" value="Test"/>
+			<column name="PARENT_ID" value="17"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="22"/>
+			<column name="NAME" value="TestType"/>
+			<column name="PARENT_ID" value="10"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="23"/>
+			<column name="NAME" value="Thema"/>
+			<column name="PARENT_ID" value="11"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="24"/>
+			<column name="NAME" value="User"/>
+			<column name="PARENT_ID" value="10"/>
+		</insert>
+	</changeSet>
+</databaseChangeLog>

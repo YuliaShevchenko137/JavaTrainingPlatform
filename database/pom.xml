@@ -10,5 +10,67 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>database</artifactId>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase-maven-plugin.version}</version>
+                <configuration>
+                    <changeLogFile>src/main/resources/liquibase/master.xml</changeLogFile>
+                    <driver>${test-driver}</driver>
+                    <url>${test-url}</url>
+                    <username>${test-username}</username>
+                    <emptyPassword>true</emptyPassword>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <profiles>
+        <profile>
+            <id>initializeDB</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-maven-plugin</artifactId>
+                        <version>${liquibase-maven-plugin.version}</version>
+                        <configuration>
+                            <changeLogFile>src/main/resources/liquibase/master.xml</changeLogFile>
+                            <driver>${oracle-driver}</driver>
+                            <url>${oracle-url}</url>
+                            <username>${oracle-username}</username>
+                            <password>${oracle-userpassword}</password>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>update</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+                <resources>
+                    <resource>
+                        <directory>database/src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
     
 </project>

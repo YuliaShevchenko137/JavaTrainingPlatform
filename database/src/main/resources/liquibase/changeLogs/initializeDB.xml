@@ -1,0 +1,209 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.8"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.8
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd">
+
+    <property name="shema" value="javal3"/>
+    <property name="author" value="javal3"/>
+
+    <changeSet author="${author}" id="drop table PARAMETERS">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="PARAMETERS"/>
+        </preConditions>
+        <dropTable tableName="PARAMETERS"/>
+    </changeSet>
+
+    <changeSet author="${author}" id="drop table LIST_TYPE">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="LIST_TYPE"/>
+        </preConditions>
+        <dropTable tableName="LIST_TYPE"/>
+    </changeSet>
+
+    <changeSet author="${author}" id="drop table DBOBJECTS">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="DBOBJECTS"/>
+        </preConditions>
+        <dropTable tableName="DBOBJECTS"/>
+    </changeSet>
+
+    <changeSet author="${author}" id="drop table OBJECT_TYPE_ATTRIBUTES">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="OBJECT_TYPE_ATTRIBUTES"/>
+        </preConditions>
+        <dropTable tableName="OBJECT_TYPE_ATTRIBUTES"/>
+    </changeSet>
+
+    <changeSet author="${author}" id="drop table ATTRIBUTES">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ATTRIBUTES"/>
+        </preConditions>
+        <dropTable tableName="ATTRIBUTES"/>
+    </changeSet>
+
+    <changeSet author="${author}" id="drop table ATTRIBUTE_TYPES">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ATTRIBUTE_TYPES"/>
+        </preConditions>
+        <dropTable tableName="ATTRIBUTE_TYPES"/>
+    </changeSet>
+
+    <changeSet author="${author}" id="drop table OBJECT_TYPES">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="OBJECT_TYPES"/>
+        </preConditions>
+        <dropTable tableName="OBJECT_TYPES"/>
+    </changeSet>
+
+    <changeSet author="${author}" id="createTables">
+        <createTable tableName="DBOBJECTS">
+            <column name="OBJECT_ID" type="number(38)"/>
+            <column name="OBJECT_TYPE_ID" type="number(38)"/>
+            <column name="PARENT_ID" type="number(38)"/>
+        </createTable>
+        <addNotNullConstraint columnDataType="number(38)" columnName="OBJECT_ID" tableName="DBOBJECTS"/>
+        <addPrimaryKey columnNames="OBJECT_ID" tableName="DBOBJECTS"/>
+
+        <createTable tableName="OBJECT_TYPES">
+            <column name="OBJECT_TYPE_ID" type="number(38)"/>
+            <column name="NAME" type="varchar(40)"/>
+            <column name="PARENT_ID" type="number(38)"/>
+        </createTable>
+        <addNotNullConstraint columnDataType="number(38)" columnName="OBJECT_TYPE_ID" tableName="OBJECT_TYPES"/>
+        <addPrimaryKey columnNames="OBJECT_TYPE_ID" tableName="OBJECT_TYPES"/>
+
+        <createTable tableName="PARAMETERS">
+            <column name="PARAMETER_ID" type="number(38)"/>
+            <column name="OBJECT_ID" type="number(38)"/>
+            <column name="ATTRIBUTE_ID" type="number(38)"/>
+            <column name="INTEGER_VALUE" type="int"/>
+            <column name="DECIMAL_VALUE" type="float"/>
+            <column name="STRING_VALUE" type="varchar(1000)"/>
+            <column name="XML_VALUE" type="varchar(1000)"/>
+            <column name="DATE_VALUE" type="date"/>
+            <column name="LIST_VALUE" type="number(38)"/>
+            <column name="PARAMETER_VALUE" type="number(38)"/>
+            <column name="OBJECT_VALUE" type="number(38)"/>
+            <column name="DATA_VALUE" type="varchar(300)"/>
+        </createTable>
+        <addNotNullConstraint columnDataType="number(38)" columnName="OBJECT_ID" tableName="PARAMETERS"/>
+        <addNotNullConstraint columnDataType="number(38)" columnName="ATTRIBUTE_ID" tableName="PARAMETERS"/>
+        <addNotNullConstraint columnDataType="number(38)" columnName="PARAMETER_ID" tableName="PARAMETERS"/>
+        <addPrimaryKey columnNames="PARAMETER_ID" tableName="PARAMETERS"/>
+
+        <createTable tableName="ATTRIBUTES">
+            <column name="ATTRIBUTE_ID" type="number(38)"/>
+            <column name="NAME" type="varchar(40)"/>
+            <column name="TYPE_NAME" type="varchar(40)"/>
+        </createTable>
+        <addNotNullConstraint columnDataType="number(38)" columnName="ATTRIBUTE_ID" tableName="ATTRIBUTES"/>
+        <addPrimaryKey columnNames="ATTRIBUTE_ID" tableName="ATTRIBUTES"/>
+
+        <createTable tableName="ATTRIBUTE_TYPES">
+            <column name="TYPE_NAME" type="varchar(40)"/>
+        </createTable>
+        <addNotNullConstraint columnDataType="varchar(40)" columnName="TYPE_NAME" tableName="ATTRIBUTE_TYPES"/>
+        <addPrimaryKey columnNames="TYPE_NAME" tableName="ATTRIBUTE_TYPES"/>
+
+        <createTable tableName="LIST_TYPE">
+            <column name="LIST_ID" type="number(38)"/>
+            <column name="VALUE" type="varchar(40)"/>
+            <column name="ATTRIBUTE_ID" type="number(38)"/>
+        </createTable>
+        <addNotNullConstraint columnDataType="number(38)" columnName="LIST_ID" tableName="LIST_TYPE"/>
+        <addPrimaryKey columnNames="LIST_ID" tableName="LIST_TYPE"/>
+
+        <createTable tableName="OBJECT_TYPE_ATTRIBUTES">
+            <column name="OBJECT_TYPE_ID" type="number(38)"/>
+            <column name="ATTRIBUTE_ID" type="number(38)"/>
+        </createTable>
+        <addNotNullConstraint columnDataType="number(38)" columnName="OBJECT_TYPE_ID" tableName="OBJECT_TYPE_ATTRIBUTES"/>
+        <addNotNullConstraint columnDataType="number(38)" columnName="ATTRIBUTE_ID" tableName="OBJECT_TYPE_ATTRIBUTES"/>
+        <addPrimaryKey columnNames="OBJECT_TYPE_ID, ATTRIBUTE_ID" tableName="OBJECT_TYPE_ATTRIBUTES"/>
+
+        <addForeignKeyConstraint
+                baseTableName="DBOBJECTS"
+                baseColumnNames="OBJECT_TYPE_ID"
+                constraintName="FK_L3Key1"
+                referencedTableName="OBJECT_TYPES"
+                referencedColumnNames="OBJECT_TYPE_ID"/>
+
+        <addForeignKeyConstraint
+                baseTableName="PARAMETERS"
+                baseColumnNames="ATTRIBUTE_ID"
+                constraintName="FK_L3Key2"
+                referencedTableName="ATTRIBUTES"
+                referencedColumnNames="ATTRIBUTE_ID"/>
+
+        <addForeignKeyConstraint
+                baseTableName="ATTRIBUTES"
+                baseColumnNames="TYPE_NAME"
+                constraintName="FK_L3Key3"
+                referencedTableName="ATTRIBUTE_TYPES"
+                referencedColumnNames="TYPE_NAME"/>
+
+        <addForeignKeyConstraint
+                baseTableName="OBJECT_TYPES"
+                baseColumnNames="PARENT_ID"
+                constraintName="FK_L3Key4"
+                referencedTableName="OBJECT_TYPES"
+                referencedColumnNames="OBJECT_TYPE_ID"/>
+
+        <addForeignKeyConstraint
+                baseTableName="DBOBJECTS"
+                baseColumnNames="PARENT_ID"
+                constraintName="FK_L3Key5"
+                referencedTableName="DBOBJECTS"
+                referencedColumnNames="OBJECT_ID"/>
+
+        <addForeignKeyConstraint
+                baseTableName="OBJECT_TYPE_ATTRIBUTES"
+                baseColumnNames="OBJECT_TYPE_ID"
+                constraintName="FK_L3Key6"
+                referencedTableName="OBJECT_TYPES"
+                referencedColumnNames="OBJECT_TYPE_ID"/>
+
+        <addForeignKeyConstraint
+                baseTableName="OBJECT_TYPE_ATTRIBUTES"
+                baseColumnNames="ATTRIBUTE_ID"
+                constraintName="FK_L3Key7"
+                referencedTableName="ATTRIBUTES"
+                referencedColumnNames="ATTRIBUTE_ID"/>
+
+        <addForeignKeyConstraint
+                baseTableName="PARAMETERS"
+                baseColumnNames="OBJECT_ID"
+                constraintName="FK_L3Key8"
+                referencedTableName="DBOBJECTS"
+                referencedColumnNames="OBJECT_ID"/>
+
+        <addForeignKeyConstraint
+                baseTableName="PARAMETERS"
+                baseColumnNames="LIST_VALUE"
+                constraintName="FK_L3Key9"
+                referencedTableName="LIST_TYPE"
+                referencedColumnNames="LIST_ID"/>
+
+        <addForeignKeyConstraint
+                baseTableName="PARAMETERS"
+                baseColumnNames="PARAMETER_VALUE"
+                constraintName="FK_L3Key10"
+                referencedTableName="PARAMETERS"
+                referencedColumnNames="PARAMETER_ID"/>
+
+        <addForeignKeyConstraint
+                baseTableName="LIST_TYPE"
+                baseColumnNames="ATTRIBUTE_ID"
+                constraintName="FK_L3Key11"
+                referencedTableName="ATTRIBUTES"
+                referencedColumnNames="ATTRIBUTE_ID"/>
+
+        <addForeignKeyConstraint
+                baseTableName="PARAMETERS"
+                baseColumnNames="OBJECT_VALUE"
+                constraintName="FK_L3Key12"
+                referencedTableName="DBOBJECTS"
+                referencedColumnNames="OBJECT_ID"/>
+    </changeSet>
+</databaseChangeLog>

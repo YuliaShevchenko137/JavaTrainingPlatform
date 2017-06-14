@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>Main</title>
   </head>
   <body>
-  $END$
+  <script type="text/javascript" language="javascript" src="com.netcracker.lab3.jtp.gwt.MainPage.nocache.js"></script>
   </body>
 </html>

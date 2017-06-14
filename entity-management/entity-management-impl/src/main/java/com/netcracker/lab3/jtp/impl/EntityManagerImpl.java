@@ -5,7 +5,6 @@ import com.netcracker.lab3.jtp.annotation.Attribute;
 import com.netcracker.lab3.jtp.annotation.AttributeType;
 import com.netcracker.lab3.jtp.annotation.DBObjectType;
 import com.netcracker.lab3.jtp.api.EntityManager;
-import com.netcracker.lab3.jtp.db.KeyGenerator;
 import com.netcracker.lab3.jtp.db.SpringDataBase;
 import com.netcracker.lab3.jtp.entity.Entity;
 import com.netcracker.lab3.jtp.rowmappers.BigIntegerRowMapper;

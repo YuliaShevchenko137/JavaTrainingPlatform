@@ -6,8 +6,9 @@
     <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
-        <module>database</module>
         <module>entity-management</module>
+        <module>database</module>
+        <module>gwt</module>
         <module>web</module>
     </modules>
     <name>java-training-platform</name>
@@ -29,6 +30,8 @@
         <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
         <versioneye-maven-plugin.version>3.11.2</versioneye-maven-plugin.version>
         <liquibase-maven-plugin.version>3.5.3</liquibase-maven-plugin.version>
+        <!--Directories-->
+        <webapp-directory>${project.build.directory}/${project.build.finalName}</webapp-directory>
         <!--Logging-->
         <slf4j.version>1.7.25</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
@@ -40,6 +43,7 @@
         <ojdbc.version>12.1.0.2</ojdbc.version>
         <h2.version>1.4.195</h2.version>
         <auto-service.version>1.0-rc2</auto-service.version>
+        <gwt.version>2.8.1</gwt.version>
         <!--Code Style-->
         <pmd.version>3.8</pmd.version>
         <checkstyle.version>2.17</checkstyle.version>
@@ -47,6 +51,17 @@
         <!--Testing-->
         <junit.version>4.12</junit.version>
         <dbunit.version>2.4.9</dbunit.version>
+        <!--Data base-->
+        <oracle-driver>oracle.jdbc.driver.OracleDriver</oracle-driver>
+        <oracle-url>jdbc:oracle:thin:@//localhost:1521/XE</oracle-url>
+        <oracle-username>javal3</oracle-username>
+        <oracle-userpassword>javal3</oracle-userpassword>
+        <test-driver>org.h2.Driver</test-driver>
+        <test-url>jdbc:h2:~/test</test-url>
+        <test-username>sa</test-username>
+        <test-userpassword></test-userpassword>
+        <!--Web-->
+        <war-plugin.version>2.6</war-plugin.version>
     </properties>
 
     <dependencies>
@@ -105,6 +120,18 @@
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
             <version>${liquibase-maven-plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -202,20 +229,22 @@
         </pluginManagement>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>${gwt.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${war-plugin.version}</version>
+            </plugin>
+            <plugin>
                 <groupId>com.versioneye</groupId>
                 <artifactId>versioneye-maven-plugin</artifactId>
                 <version>${versioneye-maven-plugin.version}</version>
                 <configuration>
                     <apiKey>8f82122e742473c50c9a</apiKey>
                     <organisation>newOrg</organisation>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>${liquibase-maven-plugin.version}</version>
-                <configuration>
-                    <propertyFile>target/classes/liquibase/liquibase.properties</propertyFile>
                 </configuration>
             </plugin>
         </plugins>
@@ -225,9 +254,10 @@
                 <filtering>true</filtering>
             </resource>
             <resource>
-                <directory>src/main/liquibase</directory>
+                <directory>database/src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
     </build>
+
 </project>

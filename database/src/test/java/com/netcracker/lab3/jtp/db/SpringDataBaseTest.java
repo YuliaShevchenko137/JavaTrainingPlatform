@@ -5,48 +5,30 @@ import org.dbunit.*;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.jdbc.core.RowMapper;
-
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Slf4j
 public class SpringDataBaseTest extends DBTestCase {
-    final private SpringDataBase dataBase;
-    private RowMapper rowMapper;
-    final private IDatabaseTester tester;
+    private SpringDataBase dataBase;
+    private IDatabaseTester tester;
 
     public SpringDataBaseTest(String name) {
         super(name);
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "oracle.jdbc.driver.OracleDriver");
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:oracle:thin:@//localhost:1521/XE");
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "javal3test");
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "javal3test");
-        System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_SCHEMA, "javal3test" );
-        ApplicationContext context = new ClassPathXmlApplicationContext("Beans/DataBaseBeans.xml");
-        tester = (IDatabaseTester) context.getBean("tester");
-        dataBase = (SpringDataBase) context.getBean("testDataBase");
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "org.h2.Driver");
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:h2:~/test");
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "sa");
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "");
     }
 
     @Before
     public void setUp(){
-        rowMapper = new RowMapper() {
-            @Override
-            public Integer mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-                return resultSet.getInt(1);
-            }
-        };
-    }
-
-    @Test
-    public void testSelectStatment(){
-        int test = (Integer) dataBase.executeObjectQuery("select 2 from dual", rowMapper);
-        Assert.assertEquals("simple select", 2, test);
+        ApplicationContext context = new ClassPathXmlApplicationContext("Beans/DataBaseBeans.xml");
+        tester = (IDatabaseTester) context.getBean("tester");
+        dataBase = (SpringDataBase) context.getBean("testDataBase");
     }
 
     @Test
@@ -77,9 +59,7 @@ public class SpringDataBaseTest extends DBTestCase {
             expected = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
                     .getResourceAsStream("src/main/resources/DataSet/afterDeleteDataSet.xml"));
             Assertion.assertEquals(expected, data);
-        } catch (DataSetException e) {
-            log.error(e.getMessage());
-        } catch (SQLException e) {
+        } catch (DataSetException | SQLException e) {
             log.error(e.getMessage());
         } catch (DatabaseUnitException e) {
             log.debug(e.getMessage());
@@ -89,6 +69,8 @@ public class SpringDataBaseTest extends DBTestCase {
             dataBase.execute("drop table a");
         }
     }
+
+
 
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     @Override

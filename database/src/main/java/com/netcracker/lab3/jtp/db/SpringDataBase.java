@@ -61,7 +61,7 @@ public class SpringDataBase implements DAO{
     public void executeLiquibase(String path) {
         try {
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(dataSource.getConnection()));
-            Liquibase liquibase = new Liquibase("src/main/resources/DBSQLFiles/" + path +".xml", new ClassLoaderResourceAccessor(), database);
+            Liquibase liquibase = new Liquibase(path, new ClassLoaderResourceAccessor(), database);
             liquibase.update("v 1.0");
         } catch (SQLException e) {
             e.printStackTrace();

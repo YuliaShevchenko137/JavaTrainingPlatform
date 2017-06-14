@@ -1,4 +1,4 @@
-package com.netcracker.lab3.jtp.db;
+package com.netcracker.lab3.jtp;
 
 import java.math.BigInteger;
 import java.util.Calendar;
