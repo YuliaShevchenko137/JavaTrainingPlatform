@@ -2,7 +2,7 @@ package com.netcracker.lab3.jtp.impl;
 
 import com.netcracker.lab3.jtp.*;
 import com.netcracker.lab3.jtp.annotation.Attribute;
-import com.netcracker.lab3.jtp.annotation.AttributeType;
+import com.netcracker.lab3.jtp.enums.AttributeType;
 import com.netcracker.lab3.jtp.annotation.DBObjectType;
 import com.netcracker.lab3.jtp.api.EntityManager;
 import com.netcracker.lab3.jtp.db.SpringDataBase;

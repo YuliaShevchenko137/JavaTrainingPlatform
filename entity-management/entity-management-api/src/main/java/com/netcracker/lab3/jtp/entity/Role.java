@@ -1,7 +1,7 @@
 package com.netcracker.lab3.jtp.entity;
 
 import com.netcracker.lab3.jtp.annotation.Attribute;
-import com.netcracker.lab3.jtp.annotation.AttributeType;
+import com.netcracker.lab3.jtp.enums.AttributeType;
 import com.netcracker.lab3.jtp.annotation.DBObjectType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

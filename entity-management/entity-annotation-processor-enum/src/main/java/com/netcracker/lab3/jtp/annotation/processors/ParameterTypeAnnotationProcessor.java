@@ -6,14 +6,20 @@ import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
+
+import com.netcracker.lab3.jtp.annotation.DBParameterType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,17 +32,17 @@ public class ParameterTypeAnnotationProcessor extends AbstractProcessor {
     public ParameterTypeAnnotationProcessor(){
         super();
         try {
-            String parameterTypeSQLPath = "database/src/main/resources/liquibase/changeLogs/parameterTypes.xml";
-            parameterTypeWriter = new BufferedWriter(new FileWriter(parameterTypeSQLPath, false));
-            parameterTypeWriter.write("<databaseChangeLog\n" +
-                    "        xmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
-                    "        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-                    "        xsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
-                    "         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
+            Path parameterTypeXMLPath = Paths.get("database/src/main/resources/liquibase/changeLogs/parameterTypes.xml");
+            parameterTypeWriter = Files.newBufferedWriter(parameterTypeXMLPath, Charset.forName("UTF-8"));
+                parameterTypeWriter.write("<databaseChangeLog\n" +
+                    "\t\txmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
+                    "\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+                    "\t\txsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
+                    "\t\thttp://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
                     "\n" +
-                    "    <property name=\"author\" value=\"javal3\"/>" +
+                    "\t<property name=\"author\" value=\"javal3\"/>" +
                     "\n" +
-                    "    <changeSet author=\"${author}\" id=\"insert into ATTRIBUTE_TYPES\">\n");
+                    "\t<changeSet author=\"${author}\" id=\"insert into ATTRIBUTE_TYPES\">\n");
             parameterTypeWriter.flush();
         } catch (IOException e) {
             log.error(e.getMessage());
@@ -45,9 +51,8 @@ public class ParameterTypeAnnotationProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-
-        if (annotations != null) {
-            for (TypeElement annotation : annotations) {
+        for (TypeElement annotation : annotations) {
+            if (annotation.getSimpleName().contentEquals(DBParameterType.class.getSimpleName())) {
                 Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
                 for (Element element : annotatedElements) {
                     TypeElement anClass = (TypeElement) element;
@@ -68,18 +73,23 @@ public class ParameterTypeAnnotationProcessor extends AbstractProcessor {
                     }
                 }
             }
-            if (annotations.isEmpty()) {
-                try {
-                    parameterTypeWriter.write("\t</changeSet>\n" +
-                            "</databaseChangeLog>");
-                    parameterTypeWriter.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    log.error(e.getMessage());
-                }
+        }
+        if (annotations.isEmpty()) {
+            try {
+                parameterTypeWriter.write("\t</changeSet>\n" +
+                        "</databaseChangeLog>");
+                parameterTypeWriter.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
         return true;
+    }
+
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.latestSupported();
     }
 
 }

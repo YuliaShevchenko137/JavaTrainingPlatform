@@ -1,6 +1,8 @@
 package com.netcracker.lab3.jtp.annotation;
 
 
+import com.netcracker.lab3.jtp.enums.AttributeType;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -8,9 +8,7 @@
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>entity-annotation-processor</artifactId>
-
 
     <dependencies>
         <dependency>
@@ -20,9 +18,8 @@
         </dependency>
         <dependency>
             <groupId>com.netcracker.lab3.javaplatform</groupId>
-            <artifactId>entity-annotation-processor-enum</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
+            <artifactId>entity-processing-enum</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -35,72 +32,8 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <compilerArgument>-proc:none</compilerArgument>
+                    <proc>none</proc>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>com.netcracker.lab3.jtp.annotation.processors.ParameterTypeAnnotationProcessor</exclude>
-                    </excludes>
-                </configuration>
-                <inherited>true</inherited>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-                <inherited>true</inherited>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                        <inherited>true</inherited>
-                        <configuration>
-                            <includes>
-                                <include>com.netcracker.lab3.jtp.annotation.processors.ParameterTypeAnnotationProcessor</include>
-                            </includes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>after-processing</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                        <inherited>false</inherited>
-                        <configuration>
-                            <excludes>
-                                <exclude>com.netcracker.lab3.jtp.annotation.processors.ParameterTypeAnnotationProcessor</exclude>
-                            </excludes>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.bsc.maven</groupId>
-                <artifactId>maven-processor-plugin</artifactId>
-                <version>${maven-processor-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>process</id>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <phase>compile</phase>
-                        <configuration>
-                            <processors>
-                                <processor>com.netcracker.lab3.jtp.annotation.processors.ParameterTypeAnnotationProcessor</processor>
-                            </processors>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

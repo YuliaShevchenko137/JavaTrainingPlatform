@@ -12,13 +12,17 @@ import com.netcracker.lab3.jtp.KeyGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -39,39 +43,39 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
     public EntityAnnotationProcessor(){
         super();
         try {
-            String objectTypesSQLPath = "database/src/main/resources/liquibase/changeLogs/objectTypes.xml";
-            typeWriter = new BufferedWriter(new FileWriter(objectTypesSQLPath, false));
+            Path objectTypesXMLPath = Paths.get("database/src/main/resources/liquibase/changeLogs/objectTypes.xml");
+            typeWriter = Files.newBufferedWriter(objectTypesXMLPath, Charset.forName("UTF-8"));
             typeWriter.write("<databaseChangeLog\n" +
-                    "        xmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
-                    "        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-                    "        xsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
-                    "         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
+                    "\t\txmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
+                    "\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+                    "\t\txsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
+                    "\t\thttp://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
                     "\n" +
                     "\t<property name=\"author\" value=\"javal3\"/>" +
                     "\n" +
                     "\t<changeSet author=\"${author}\" id=\"insert into OBJECT_TYPES\">\n");
             typeWriter.flush();
 
-            String attributesSQLPath = "database/src/main/resources/liquibase/changeLogs/attributes.xml";
-            attributeWriter = new BufferedWriter(new FileWriter(attributesSQLPath, false));
+            Path attributesXMLPath = Paths.get("database/src/main/resources/liquibase/changeLogs/attributes.xml");
+            attributeWriter = Files.newBufferedWriter(attributesXMLPath, Charset.forName("UTF-8"));
             attributeWriter.write("<databaseChangeLog\n" +
-                    "        xmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
-                    "        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-                    "        xsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
-                    "         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
+                    "\t\txmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
+                    "\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+                    "\t\txsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
+                    "\t\thttp://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
                     "\n" +
                     "\t<property name=\"author\" value=\"javal3\"/>" +
                     "\n" +
                     "\t<changeSet author=\"${author}\" id=\"insert into ATTRIBUTES\">\n");
             attributeWriter.flush();
 
-            String objectAttributeSQLPath = "database/src/main/resources/liquibase/changeLogs/objectTypeAttributes.xml";
-            objectAttributeWriter = new BufferedWriter(new FileWriter(objectAttributeSQLPath, false));
+            Path objectAttributeXMLPath = Paths.get("database/src/main/resources/liquibase/changeLogs/objectTypeAttributes.xml");
+            objectAttributeWriter = Files.newBufferedWriter(objectAttributeXMLPath, Charset.forName("UTF-8"));
             objectAttributeWriter.write("<databaseChangeLog\n" +
-                    "        xmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
-                    "        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-                    "        xsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
-                    "         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
+                    "\t\txmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
+                    "\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
+                    "\t\txsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
+                    "\t\thttp://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
                     "\n" +
                     "\t<property name=\"author\" value=\"javal3\"/>" +
                     "\n" +
@@ -83,12 +87,14 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidDeeplyNestedIfStmts")
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-            Set<DBAttribute> attributes = new HashSet<>();
-            ArrayList<ObjectTypeAttribute> objectAttributes = new ArrayList<>();
+        Set<DBAttribute> attributes = new HashSet<>();
+        ArrayList<ObjectTypeAttribute> objectAttributes = new ArrayList<>();
+        if (annotations != null) {
             for (TypeElement annotation : annotations) {
-                Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
                 if (annotation.getSimpleName().contentEquals(DBObjectType.class.getSimpleName())) {
+                    Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
                     for (Element element : annotatedElements) {
                         try {
                             TypeElement anClass = (TypeElement) element;
@@ -114,6 +120,7 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
                                     Attribute attrType = list.get(i).getAnnotation(Attribute.class);
                                     attribute.setType(attrType.value().name());
                                     attributes.add(attribute);
+
                                     ObjectTypeAttribute objectAttribute = new ObjectTypeAttribute();
                                     objectAttribute.setAttributeId(getAttributeId(attributes, attribute));
                                     objectAttribute.setObjectTypeId(BigInteger.valueOf(objectType.id()));
@@ -126,17 +133,18 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
                     }
                 }
             }
-            if (annotations != null && annotations.isEmpty()) {
+            if (annotations.isEmpty()) {
                 try {
                     typeWriter.write("\t</changeSet>\n" +
                             "</databaseChangeLog>");
                     typeWriter.flush();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage());
                 }
             }
-            attributesGenerate(attributes);
-            objectAttributeGenerate(objectAttributes);
+        }
+        attributesGenerate(attributes);
+        objectAttributeGenerate(objectAttributes);
         return true;
     }
 
@@ -162,7 +170,7 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
                         "</databaseChangeLog>");
                 attributeWriter.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
     }
@@ -187,17 +195,22 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
                         "</databaseChangeLog>");
                 objectAttributeWriter.flush();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
     }
 
     public BigInteger getAttributeId(Set<DBAttribute> attributes, DBAttribute attribute) {
         for (DBAttribute attr : attributes) {
-            if(attr.equals(attribute)) {
+            if (attr.equals(attribute)) {
                 return attr.getId();
             }
         }
         return attribute.getId();
+    }
+
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.latestSupported();
     }
 }

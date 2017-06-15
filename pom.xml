@@ -8,7 +8,6 @@
     <modules>
         <module>entity-management</module>
         <module>database</module>
-        <module>gwt</module>
         <module>web</module>
     </modules>
     <name>java-training-platform</name>
@@ -251,10 +250,6 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-            <resource>
-                <directory>database/src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
