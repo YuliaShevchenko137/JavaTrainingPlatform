@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.3.RELEASE</version>
+        <version>1.5.4.RELEASE</version>
     </parent>
 
     <properties>
@@ -23,12 +23,12 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <maven-dependency-plugin.version>3.0.0</maven-dependency-plugin.version>
+        <maven-dependency-plugin.version>3.0.1</maven-dependency-plugin.version>
         <maven-jar-plugin.version>2.3.2</maven-jar-plugin.version>
         <maven-processor-plugin.version>2.2.4</maven-processor-plugin.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
-        <versioneye-maven-plugin.version>3.11.2</versioneye-maven-plugin.version>
+        <versioneye-maven-plugin.version>3.11.4</versioneye-maven-plugin.version>
         <liquibase-maven-plugin.version>3.5.3</liquibase-maven-plugin.version>
         <!--Directories-->
         <webapp-directory>${project.build.directory}/${project.build.finalName}</webapp-directory>
@@ -39,9 +39,9 @@
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <lombok.version>1.16.14</lombok.version>
-        <springjdbc.version>4.3.8.RELEASE</springjdbc.version>
+        <springjdbc.version>4.3.9.RELEASE</springjdbc.version>
         <ojdbc.version>12.1.0.2</ojdbc.version>
-        <h2.version>1.4.195</h2.version>
+        <h2.version>1.4.196</h2.version>
         <auto-service.version>1.0-rc2</auto-service.version>
         <gwt.version>2.8.1</gwt.version>
         <!--Code Style-->
