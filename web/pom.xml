@@ -14,9 +14,27 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.netcracker.lab3.javaplatform</groupId>
-            <artifactId>gwt</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>${gwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>${gwt.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <version>${gwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlet.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -30,6 +48,7 @@
                 <executions>
                     <execution>
                         <goals>
+                            <goal>resources</goal>
                             <goal>compile</goal>
                         </goals>
                     </execution>
@@ -55,5 +74,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
