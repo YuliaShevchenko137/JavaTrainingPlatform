@@ -4,8 +4,8 @@
 
     <inherits name='com.google.gwt.user.User'/>
 
-    <source path="client"/>
-    <source path="server"/>
+    <source path="client/"/>
+    <source path="server/"/>
 
     <entry-point class='com.netcracker.lab3.jtp.gwt.main.client.Main'/>
 </module>

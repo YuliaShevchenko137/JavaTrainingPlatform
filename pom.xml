@@ -11,6 +11,7 @@
         <module>web</module>
     </modules>
     <name>java-training-platform</name>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -35,6 +36,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <log4j.version>1.2.17</log4j.version>
         <!--Libraries-->
+        <spring-boot.version>1.5.4.RELEASE</spring-boot.version>
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <lombok.version>1.16.14</lombok.version>
@@ -58,7 +60,6 @@
         <test-driver>org.h2.Driver</test-driver>
         <test-url>jdbc:h2:~/test</test-url>
         <test-username>sa</test-username>
-        <test-userpassword></test-userpassword>
         <!--Web-->
         <war-plugin.version>2.6</war-plugin.version>
         <servlet.version>2.5</servlet.version>
@@ -68,6 +69,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -101,11 +108,11 @@
             <artifactId>dbunit</artifactId>
             <version>${dbunit.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>${springjdbc.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-jdbc</artifactId>-->
+            <!--<version>${springjdbc.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.github.noraui</groupId>
             <artifactId>ojdbc7</artifactId>

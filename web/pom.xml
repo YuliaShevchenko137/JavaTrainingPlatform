@@ -27,8 +27,9 @@
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
+            <artifactId>gwt-codeserver</artifactId>
             <version>${gwt.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -48,7 +49,6 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>resources</goal>
                             <goal>compile</goal>
                         </goals>
                     </execution>

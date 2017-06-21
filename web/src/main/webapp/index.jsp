@@ -11,6 +11,8 @@
     <title>Main</title>
   </head>
   <body>
-  <script type="text/javascript" language="javascript" src="com.netcracker.lab3.jtp.gwt.MainPage.nocache.js"></script>
+    <p>This is main page<p/>
+    <script type="text/javascript" language="javascript"
+          src="com.netcracker.lab3.jtp.gwt.main.Main/com.netcracker.lab3.jtp.gwt.main.Main.nocache.js"></script>
   </body>
 </html>
