@@ -50,6 +50,7 @@
                     <execution>
                         <goals>
                             <goal>compile</goal>
+                            <goal>run-codeserver</goal>
                         </goals>
                     </execution>
                 </executions>

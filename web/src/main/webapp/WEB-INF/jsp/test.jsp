@@ -1,16 +1,11 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Клиент
-  Date: 21.06.2017
-  Time: 21:59
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Test</title>
+    <link rel="stylesheet" href="../../Design.css">
 </head>
 <body>
-    There must be test
+    <script type="text/javascript" language="javascript"
+            src="com.netcracker.lab3.jtp.gwt.test.Test/com.netcracker.lab3.jtp.gwt.test.Test.nocache.js"></script>
 </body>
 </html>
