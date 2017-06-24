@@ -12,8 +12,7 @@ public class TestController {
     @RequestMapping("/test")
     @ResponseBody
     public ModelAndView testPage(Model model) {
-        ModelAndView mav = new ModelAndView("test");
-        return mav;
+        return new ModelAndView("test");
     }
 
 }

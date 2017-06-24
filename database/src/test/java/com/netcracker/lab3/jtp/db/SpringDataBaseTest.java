@@ -1,17 +1,22 @@
 package com.netcracker.lab3.jtp.db;
 
+import liquibase.Liquibase;
+import liquibase.changelog.DatabaseChangeLog;
+import liquibase.database.Database;
+import liquibase.database.DatabaseFactory;
+import liquibase.database.jvm.JdbcConnection;
+import liquibase.resource.FileSystemResourceAccessor;
 import lombok.extern.slf4j.Slf4j;
 import org.dbunit.*;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.junit.Before;
-import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.sql.SQLException;
 
 @Slf4j
+@SuppressWarnings({"PMD.SignatureDeclareThrowsException", "PMD.AvoidCatchingGenericException"})
 public class SpringDataBaseTest extends DBTestCase {
     private SpringDataBase dataBase;
     private IDatabaseTester tester;
@@ -19,21 +24,31 @@ public class SpringDataBaseTest extends DBTestCase {
     public SpringDataBaseTest(String name) {
         super(name);
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "org.h2.Driver");
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:h2:~/test");
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:h2:mem:testdb");
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "sa");
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "");
     }
 
-    @Before
-    public void setUp(){
+    @Override
+    public void setUp() {
         ApplicationContext context = new ClassPathXmlApplicationContext("Beans/DataBaseBeans.xml");
         tester = (IDatabaseTester) context.getBean("tester");
         dataBase = (SpringDataBase) context.getBean("testDataBase");
+        java.sql.Connection connection = null;
+        try {
+            connection = dataBase.getConnection();
+            Liquibase liquibase = null;
+            DatabaseChangeLog changeLog = new DatabaseChangeLog();
+            changeLog.setPhysicalFilePath("\\database\\src\\main\\resources\\liquibase\\master.xml");
+            Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
+            liquibase = new Liquibase(changeLog, new FileSystemResourceAccessor(), database);
+            liquibase.update("Test");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @Test
-    @SuppressWarnings("PMD.AvoidCatchingGenericException") //in dbunit in class IDatabaseTester in method IDatabaseConnection getConnection throws Exception
-    public void testDMLStatment() {
+  public void testDMLStatment() {
         try {
             dataBase.execute("create table a ( b number(5) )");
             dataBase.execute("insert into a values(5)");
@@ -70,9 +85,6 @@ public class SpringDataBaseTest extends DBTestCase {
         }
     }
 
-
-
-    @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     @Override
     protected IDataSet getDataSet() throws Exception {
         return tester.getDataSet();

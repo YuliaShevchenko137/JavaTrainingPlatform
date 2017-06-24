@@ -31,9 +31,9 @@
     </bean>
 
     <bean id="tester" class="org.dbunit.JdbcDatabaseTester">
-        <constructor-arg name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>
-        <constructor-arg name="connectionUrl" value="jdbc:oracle:thin:@//localhost:1521/XE"/>
-        <constructor-arg name="username" value="javal3test"/>
-        <constructor-arg name="password" value="javal3test"/>
+        <constructor-arg name="driverClass" value="org.h2.Driver"/>
+        <constructor-arg name="connectionUrl" value="jdbc:h2:mem:testdb"/>
+        <constructor-arg name="username" value="sa"/>
+        <constructor-arg name="password" value=""/>
     </bean>
 </beans>

@@ -39,8 +39,9 @@ public class EntityManagerImpl implements EntityManager {
     @Override
     public Object getParameterById(BigInteger id) {
         Entity entity = (Entity) dataBase.executeObjectQuery(
-                "select type.name from objects entity join object_types " +
-                        "on (entity.object_type_id = type.object_type_id) where params.PARAM_ID = " + id,
+                "select type.name from dbobjects entity join object_types type" +
+                        "on (entity.object_type_id = type.object_type_id) " +
+                        "join parameters params on (params.object_id = entity.object_id) where params.PARAMETER_ID = " + id,
                 new DBObjectRowMapper());
         ParametrImpl parametr = (ParametrImpl) dataBase.executeListQuery(
                 "select attr.name, " +
@@ -54,7 +55,7 @@ public class EntityManagerImpl implements EntityManager {
                         "to_char(REFERENCES_PARAM)," +
                         "DATA_VALUE)" +
                         " from attributes attr join PARAMETERS params" +
-                        "on (attr.attribute_type = params.attribute_type) where params.param_id = " + id,
+                        "on (attr.attribute_type = params.attribute_type) where params.PARAMETER_ID = " + id,
                 new ParameterRowMapper());
         DataConverter conv = new DataConverter();
         Field field = entity.getField(parametr.getName());
@@ -64,7 +65,7 @@ public class EntityManagerImpl implements EntityManager {
     @Override
     public Entity getObjectById(BigInteger id) {
         Entity entity = (Entity) dataBase.executeObjectQuery(
-                "select type.name from objects entity join object_types " +
+                "select type.name from dbobjects entity join object_types " +
                         "on (entity.object_type_id = type.object_type_id) where entity.obj_ID = " + id,
                 new DBObjectRowMapper());
         entity.setId(id);
@@ -112,8 +113,8 @@ public class EntityManagerImpl implements EntityManager {
     @Override
     public List<Entity> getObjectsByType(BigInteger id) {
         ArrayList<Entity> entities = new ArrayList<>(dataBase.executeListQuery(
-                "select type.name from objects entity join object_types " +
-                        "on (entity.object_type_id = type.object_type_id) where entity.obj_ID = " + id,
+                "select type.name from dbobjects entity join object_types type " +
+                        "on (entity.object_type_id = type.object_type_id) where entity.object_ID = " + id,
                 new DBObjectRowMapper()));
         for (int i = 0; i < entities.size(); i++) {
             createObject(entities.get(i));
@@ -129,7 +130,7 @@ public class EntityManagerImpl implements EntityManager {
     @Override
     public List<Entity> getObjectChilds(Entity entity) {
         ArrayList<BigInteger> ides = new ArrayList<>(dataBase.executeListQuery(
-                "select object_id from objects where parent_id = " + entity.getId(),
+                "select object_id from dbobjects where parent_id = " + entity.getId(),
                 new BigIntegerRowMapper()));
         ArrayList<Entity> entities = new ArrayList<>();
         for (int i = 0; i < ides.size(); i++) {
@@ -152,7 +153,7 @@ public class EntityManagerImpl implements EntityManager {
             insertParametr(entity, field);
         } else {
             DataConverter converter = new DataConverter();
-            dataBase.execute( "update params set "
+            dataBase.execute( "update parameters set "
                     + field.getAnnotation(Attribute.class).value().name() + "_value=" +
                     converter.convertToData(entity, field) +
                     " where attribute_id = (select attribute_id from attributes where name = '" + field.getName() +
@@ -163,7 +164,8 @@ public class EntityManagerImpl implements EntityManager {
 
     @Override
     public void insert(Entity entity) {
-        dataBase.execute("insert into objects values(" + KeyGenerator.generate() + "," +
+        entity.setId( KeyGenerator.generate());
+        dataBase.execute("insert into dbobjects values(" + entity.getId() + "," +
                 entity.getObjectTypeId() + "," +
                 entity.getParentId() + ")");
         ArrayList<Field> fields = new ArrayList<>(entity.getFields());
@@ -174,12 +176,13 @@ public class EntityManagerImpl implements EntityManager {
 
     public void insertParametr(Entity entity, Field field){
         DataConverter converter = new DataConverter();
-        String request = "insert into params(param_id, object_id, attribute_id, "
+        BigInteger attrId = (BigInteger) dataBase.executeObjectQuery("select attribute_id from attributes where name = '" + field.getName() + "' and type_name = '" +
+                field.getAnnotation(Attribute.class).value().name() + "'", new BigIntegerRowMapper());
+        String request = "insert into parameters(PARAMETER_ID, object_id, attribute_id, "
                 + field.getAnnotation(Attribute.class).value().name() + "_value) values(" +
-                KeyGenerator.generate() + ")," +
+                KeyGenerator.generate() + "," +
                 entity.getId() + "," +
-                "(select attribute_id from attributes where name = '" + field.getName() + "' and type_name = '" +
-                field.getAnnotation(Attribute.class).value().name() + "'),";
+                attrId + ",";
         if(field.getAnnotation(Attribute.class).value().equals(AttributeType.List)) {
             try {
                 insertList((List) field.get(entity));
@@ -196,15 +199,16 @@ public class EntityManagerImpl implements EntityManager {
         DataConverter converter = new DataConverter();
         for (int i = 0; i < list.size(); i++) {
             id = KeyGenerator.generate();
+            BigInteger attrId = (BigInteger) dataBase.executeObjectQuery("select attribute_id from attributes where name = 'list' and type_name = '" +
+                    list.get(i).getClass().getName() + "'", new BigIntegerRowMapper());
             dataBase.execute("insert into LIST_TYPE values(" + id + ", " + converter.convertToData(list.get(i)) + "," +
-                    "(select attribute_id from attributes where name = 'list' and type_name = '" +
-                    list.get(i).getClass().getName() + "'))");
+                    attrId + ")");
         }
     }
 
     @Override
     public void delete(Entity entity) {
-        dataBase.execute("delete objects where object_id = " + entity.getId());
+        dataBase.execute("delete dbobjects where object_id = " + entity.getId());
         dataBase.execute("delete PARAMETERS where object_id = " + entity.getId());
     }
 

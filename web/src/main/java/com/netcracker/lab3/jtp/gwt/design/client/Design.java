@@ -27,6 +27,7 @@ public class Design {
 
     private static Widget getMenu(){
         HTMLPanel menu = new HTMLPanel("nav", "");
+        menu.add(createParagraph("Menu"));
         return menu;
     }
 

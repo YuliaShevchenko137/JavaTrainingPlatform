@@ -7,8 +7,28 @@
 	<property name="author" value="javal3"/>
 	<changeSet author="${author}" id="insert into OBJECT_TYPES">
 		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="10"/>
+			<column name="NAME" value="EntityImpl"/>
+			<column name="PARENT_ID" value="null"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="11"/>
+			<column name="NAME" value="DBObject"/>
+			<column name="PARENT_ID" value="10"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="14"/>
+			<column name="NAME" value="Evaluating"/>
+			<column name="PARENT_ID" value="10"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
 			<column name="OBJECT_TYPE_ID" value="12"/>
 			<column name="NAME" value="Answer"/>
+			<column name="PARENT_ID" value="11"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="15"/>
+			<column name="NAME" value="Material"/>
 			<column name="PARENT_ID" value="11"/>
 		</insert>
 		<insert tableName="OBJECT_TYPES">
@@ -17,34 +37,14 @@
 			<column name="PARENT_ID" value="11"/>
 		</insert>
 		<insert tableName="OBJECT_TYPES">
-			<column name="OBJECT_TYPE_ID" value="11"/>
-			<column name="NAME" value="DBObject"/>
-			<column name="PARENT_ID" value="10"/>
-		</insert>
-		<insert tableName="OBJECT_TYPES">
-			<column name="OBJECT_TYPE_ID" value="10"/>
-			<column name="NAME" value="EntityImpl"/>
-			<column name="PARENT_ID" value="null"/>
-		</insert>
-		<insert tableName="OBJECT_TYPES">
-			<column name="OBJECT_TYPE_ID" value="14"/>
-			<column name="NAME" value="Evaluating"/>
-			<column name="PARENT_ID" value="10"/>
-		</insert>
-		<insert tableName="OBJECT_TYPES">
-			<column name="OBJECT_TYPE_ID" value="15"/>
-			<column name="NAME" value="Material"/>
+			<column name="OBJECT_TYPE_ID" value="17"/>
+			<column name="NAME" value="Question"/>
 			<column name="PARENT_ID" value="11"/>
 		</insert>
 		<insert tableName="OBJECT_TYPES">
 			<column name="OBJECT_TYPE_ID" value="16"/>
 			<column name="NAME" value="ProgramClass"/>
 			<column name="PARENT_ID" value="17"/>
-		</insert>
-		<insert tableName="OBJECT_TYPES">
-			<column name="OBJECT_TYPE_ID" value="17"/>
-			<column name="NAME" value="Question"/>
-			<column name="PARENT_ID" value="11"/>
 		</insert>
 		<insert tableName="OBJECT_TYPES">
 			<column name="OBJECT_TYPE_ID" value="18"/>

@@ -1,11 +1,12 @@
 package com.netcracker.lab3.jtp;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
 
 public class KeyGeneratorTest{
 
@@ -15,7 +16,7 @@ public class KeyGeneratorTest{
         for (int i = 0; i < 2000; i++) {
             keys.add(KeyGenerator.generate());
         }
-        Assert.assertEquals("Must generate 2000 uniq keys", 2000, keys.size());
+        assertEquals("Must generate 2000 uniq keys", 2000, keys.size());
     }
 
 }

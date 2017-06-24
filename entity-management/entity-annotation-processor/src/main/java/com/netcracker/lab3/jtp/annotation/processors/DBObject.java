@@ -12,11 +12,11 @@ import java.math.BigInteger;
 import static java.util.Objects.isNull;
 
 public class DBObject {
-    private BigInteger id;
-    private String name;
-    private BigInteger parentId;
-    private TypeElement anClass;
-    private DBObjectType objectType;
+    final private BigInteger id;
+    final private String name;
+    final private BigInteger parentId;
+    final private TypeElement anClass;
+    final private DBObjectType objectType;
 
     public DBObject(Element element) {
         anClass = (TypeElement) element;

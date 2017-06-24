@@ -1,14 +1,12 @@
 package com.netcracker.lab3.jtp.entity;
 
 import com.netcracker.lab3.jtp.annotation.DBObjectType;
-import lombok.NoArgsConstructor;
 
 import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
 
-@NoArgsConstructor
 @DBObjectType(id = 10)
 public class EntityImpl implements Entity {
 

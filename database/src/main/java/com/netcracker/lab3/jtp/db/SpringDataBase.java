@@ -22,7 +22,7 @@ import java.util.List;
 
 @Slf4j
 public class SpringDataBase implements DAO{
-    private DataSource dataSource;
+    final private DataSource dataSource;
     final private JdbcTemplate jdbcTemplateObject;
 
     public SpringDataBase(){
@@ -32,6 +32,7 @@ public class SpringDataBase implements DAO{
     }
 
     public SpringDataBase(DataSource dataSource){
+        this.dataSource = dataSource;
         jdbcTemplateObject = new JdbcTemplate(dataSource);
     }
 
@@ -43,13 +44,13 @@ public class SpringDataBase implements DAO{
 
     @Override
     public Connection getConnection() {
-        Connection con = null;
+        Connection connection = null;
         try {
-            con = dataSource.getConnection();
+            connection = dataSource.getConnection();
         } catch (SQLException e) {
             log.debug(e.getMessage());
         }
-        return con;
+        return connection;
     }
 
     @Override

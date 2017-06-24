@@ -40,7 +40,7 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
     private BufferedWriter objectAttributeWriter;
 
     Set<DBAttribute> attributes = new HashSet<>();
-    ArrayList<ObjectTypeAttribute> objectAttributes = new ArrayList<>();
+    List<ObjectTypeAttribute> objectAttributes = new ArrayList<>();
 
     public void initializeWriters(){
         try {
@@ -217,7 +217,7 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
         return attribute.getId();
     }
 
-    public boolean containId(ArrayList<DBObject> list, DBObject object) {
+    public boolean containId(List<DBObject> list, DBObject object) {
         for (int i = 0; i < list.size(); i++) {
             if(list.get(i).getId().equals(object.getParentId())) {
                 return true;

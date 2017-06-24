@@ -4,11 +4,11 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-    <include file="src\main\resources\liquibase\changeLogs\initializeDB.xml"/>
-    <include file="src\main\resources\liquibase\changeLogs\parameterTypes.xml"/>
-    <include file="src\main\resources\liquibase\changeLogs\objectTypes.xml"/>
-    <include file="src\main\resources\liquibase\changeLogs\attributes.xml"/>
-    <include file="src\main\resources\liquibase\changeLogs\objectTypeAttributes.xml"/>
+    <include file="changeLogs\initializeDB.xml" relativeToChangelogFile="true"/>
+    <include file="changeLogs\parameterTypes.xml" relativeToChangelogFile="true"/>
+    <include file="changeLogs\objectTypes.xml" relativeToChangelogFile="true"/>
+    <include file="changeLogs\attributes.xml" relativeToChangelogFile="true"/>
+    <include file="changeLogs\objectTypeAttributes.xml" relativeToChangelogFile="true"/>
 
     <!--<includeAll path="changeLogs/" relativeToChangelogFile="true"/>-->
 
