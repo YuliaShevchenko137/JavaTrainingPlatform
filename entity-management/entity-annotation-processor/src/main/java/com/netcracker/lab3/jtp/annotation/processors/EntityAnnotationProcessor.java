@@ -52,9 +52,9 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
                     "\t\txsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
                     "\t\thttp://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
                     "\n" +
-                    "\t<property name=\"author\" value=\"javal3\"/>" +
-                    "\n" +
-                    "\t<changeSet author=\"${author}\" id=\"insert into OBJECT_TYPES\">\n");
+                    "\t<property name=\"author\" value=\"javal3\"/>\n" +
+                    "\t<changeSet author=\"${author}\" id=\"insert into OBJECT_TYPES\">\n" +
+                    "\t\t<validCheckSum>ANY</validCheckSum>\n");
             typeWriter.flush();
 
             Path attributesXMLPath = Paths.get("database/src/main/resources/liquibase/changeLogs/attributes.xml");
@@ -65,9 +65,9 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
                     "\t\txsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
                     "\t\thttp://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
                     "\n" +
-                    "\t<property name=\"author\" value=\"javal3\"/>" +
-                    "\n" +
-                    "\t<changeSet author=\"${author}\" id=\"insert into ATTRIBUTES\">\n");
+                    "\t<property name=\"author\" value=\"javal3\"/>\n" +
+                    "\t<changeSet author=\"${author}\" id=\"insert into ATTRIBUTES\">\n" +
+                    "\t\t<validCheckSum>ANY</validCheckSum>\n");
             attributeWriter.flush();
 
             Path objectAttributeXMLPath = Paths.get("database/src/main/resources/liquibase/changeLogs/objectTypeAttributes.xml");
@@ -78,9 +78,9 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
                     "\t\txsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
                     "\t\thttp://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
                     "\n" +
-                    "\t<property name=\"author\" value=\"javal3\"/>" +
-                    "\n" +
-                    "\t<changeSet author=\"${author}\" id=\"insert into OBJECT_TYPE_ATTRIBUTES\">\n");
+                    "\t<property name=\"author\" value=\"javal3\"/>\n" +
+                    "\t<changeSet author=\"${author}\" id=\"insert into OBJECT_TYPE_ATTRIBUTES\">\n" +
+                    "\t\t<validCheckSum>ANY</validCheckSum>\n");
             objectAttributeWriter.flush();
         } catch (IOException e) {
             log.error(e.getMessage());

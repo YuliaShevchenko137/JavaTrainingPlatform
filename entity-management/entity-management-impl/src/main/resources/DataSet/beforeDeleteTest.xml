@@ -1,5 +1,5 @@
 <dataset>
-    <objects object_id="2001" object_type_id="13" parent_id="null"/>
+    <dbobjects object_id="2001" object_type_id="13" parent_id="null"/>
 
     <params param_id="20001" object_id="2001" attribute_id="1001" integer_value="null" decimal_value="null"
             string_value="null" xml_type="null" date_value="null" list_id="null" references_object="null"

@@ -7,6 +7,7 @@ import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.FileSystemResourceAccessor;
+import lombok.extern.slf4j.Slf4j;
 import org.dbunit.*;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -16,6 +17,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.sql.SQLException;
 import java.util.Calendar;
 
+@Slf4j
 @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.SignatureDeclareThrowsException", "PMD.AvoidCatchingGenericException", "PMD.AvoidDuplicateLiterals"})
 public class EntityManagerImplTest extends DBTestCase{
 
@@ -25,7 +27,7 @@ public class EntityManagerImplTest extends DBTestCase{
     public EntityManagerImplTest(String name) {
         super(name);
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "org.h2.Driver");
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:h2:mem:testdb");
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:h2:~/test");
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "sa");
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "");
     }
@@ -43,18 +45,19 @@ public class EntityManagerImplTest extends DBTestCase{
             connection = springDataBase.getConnection();
             Liquibase liquibase = null;
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
-            liquibase = new Liquibase(this.getClass().getResource("liquibase/changeLogs/initializeDB.xml").getPath(), new FileSystemResourceAccessor(), database);
+            liquibase = new Liquibase(this.getClass().getResource("/liquibase/changeLogs/initializeDB.xml").getPath(), new FileSystemResourceAccessor(), database);
             liquibase.update(contextName);
-            liquibase = new Liquibase(this.getClass().getResource("liquibase/changeLogs/parameterTypes.xml").getPath(), new FileSystemResourceAccessor(), database);
+            liquibase = new Liquibase(this.getClass().getResource("/liquibase/changeLogs/parameterTypes.xml").getPath(), new FileSystemResourceAccessor(), database);
             liquibase.update(contextName);
-            liquibase = new Liquibase(this.getClass().getResource("liquibase/changeLogs/objectTypes.xml").getPath(), new FileSystemResourceAccessor(), database);
+            liquibase = new Liquibase(this.getClass().getResource("/liquibase/changeLogs/objectTypes.xml").getPath(), new FileSystemResourceAccessor(), database);
             liquibase.update(contextName);
-            liquibase = new Liquibase(this.getClass().getResource("liquibase/changeLogs/attributes.xml").getPath(), new FileSystemResourceAccessor(), database);
+            liquibase = new Liquibase(this.getClass().getResource("/liquibase/changeLogs/attributes.xml").getPath(), new FileSystemResourceAccessor(), database);
             liquibase.update(contextName);
-            liquibase = new Liquibase(this.getClass().getResource("liquibase/changeLogs/objectTypeAttributes.xml").getPath(), new FileSystemResourceAccessor(), database);
+            liquibase = new Liquibase(this.getClass().getResource("/liquibase/changeLogs/objectTypeAttributes.xml").getPath(), new FileSystemResourceAccessor(), database);
             liquibase.update(contextName);
         } catch (Exception e) {
             e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -72,7 +75,7 @@ public class EntityManagerImplTest extends DBTestCase{
         try {
             IDataSet data = tester.getConnection().createDataSet(new String[]{"objects", "params"});
             IDataSet expected = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
-                            .getResourceAsStream("DataSet/insertTest.xml"));
+                    .getResourceAsStream("DataSet/insertTest.xml"));
             String objectsTable = "objects";
             String[] ignoreObjects = {"object_id"};
             Assertion.assertEqualsIgnoreCols(expected.getTable(objectsTable), data.getTable(objectsTable), ignoreObjects);
@@ -81,11 +84,12 @@ public class EntityManagerImplTest extends DBTestCase{
             Assertion.assertEqualsIgnoreCols(expected.getTable(paramsTable), data.getTable(paramsTable), ignoreParams);
         } catch (Exception e) {
             e.printStackTrace();
+            log.error(e.getMessage());
         } finally {
             try {
                 entityManager.getConnection().rollback();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
     }
@@ -116,11 +120,12 @@ public class EntityManagerImplTest extends DBTestCase{
             Assertion.assertEqualsIgnoreCols(expected.getTable(paramsTable), data.getTable(paramsTable), ignoreParams);
         } catch (Exception e) {
             e.printStackTrace();
+            log.error(e.getMessage());
         } finally {
             try {
                 entityManager.getConnection().rollback();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
     }
@@ -155,11 +160,12 @@ public class EntityManagerImplTest extends DBTestCase{
             Assertion.assertEqualsIgnoreCols(expected.getTable(paramsTable), data.getTable(paramsTable), ignoreParams);
         } catch (Exception e) {
             e.printStackTrace();
+            log.error(e.getMessage());
         } finally {
             try {
                 entityManager.getConnection().rollback();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
     }

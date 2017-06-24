@@ -24,7 +24,7 @@ public class SpringDataBaseTest extends DBTestCase {
     public SpringDataBaseTest(String name) {
         super(name);
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "org.h2.Driver");
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:h2:mem:testdb");
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:h2:~/test");
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "sa");
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "");
     }
@@ -54,25 +54,25 @@ public class SpringDataBaseTest extends DBTestCase {
             dataBase.execute("insert into a values(5)");
             IDataSet data = tester.getConnection().createDataSet(new String[]{"a"});
             IDataSet expected = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
-                    .getResourceAsStream("src/main/resources/DataSet/insertDataSet.xml"));
+                    .getResourceAsStream("DataSet/insertDataSet.xml"));
             Assertion.assertEquals(expected, data);
 
             dataBase.execute("update a  set b = 6");
             data = tester.getConnection().createDataSet(new String[]{"a"});
             expected = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
-                    .getResourceAsStream("src/main/resources/DataSet/updateDataSet.xml"));
+                    .getResourceAsStream("DataSet/updateDataSet.xml"));
             Assertion.assertEquals(expected, data);
 
             dataBase.execute("insert into a values(4)");
             data = tester.getConnection().createDataSet(new String[]{"a"});
             expected = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
-                    .getResourceAsStream("src/main/resources/DataSet/beforeDeleteDataSet.xml"));
+                    .getResourceAsStream("DataSet/beforeDeleteDataSet.xml"));
             Assertion.assertEquals(expected, data);
 
             dataBase.execute("delete a where b = 6");
             data = tester.getConnection().createDataSet(new String[]{"a"});
             expected = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
-                    .getResourceAsStream("src/main/resources/DataSet/afterDeleteDataSet.xml"));
+                    .getResourceAsStream("DataSet/afterDeleteDataSet.xml"));
             Assertion.assertEquals(expected, data);
         } catch (DataSetException | SQLException e) {
             log.error(e.getMessage());

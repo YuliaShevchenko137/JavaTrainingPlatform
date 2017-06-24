@@ -6,6 +6,7 @@
 
 	<property name="author" value="javal3"/>
 	<changeSet author="${author}" id="insert into ATTRIBUTE_TYPES">
+		<validCheckSum>ANY</validCheckSum>
 		<insert tableName="ATTRIBUTE_TYPES">
 			<column name="TYPE_NAME" value="String"/>
 		</insert>

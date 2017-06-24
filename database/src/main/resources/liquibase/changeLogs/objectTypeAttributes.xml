@@ -6,121 +6,122 @@
 
 	<property name="author" value="javal3"/>
 	<changeSet author="${author}" id="insert into OBJECT_TYPE_ATTRIBUTES">
+		<validCheckSum>ANY</validCheckSum>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="11"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941910"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900040"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="11"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941921"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900061"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="11"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941932"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900062"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="11"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941933"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900073"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="11"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941934"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900074"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="14"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941945"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900075"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="14"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941946"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900086"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="14"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941947"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900087"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="12"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941958"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900098"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="12"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941969"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900099"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="12"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941945"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900075"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="15"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469419711"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001011"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="15"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469419712"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001012"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="13"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469419713"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001113"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="13"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469419814"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001114"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="13"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469419815"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001115"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="17"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469419916"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001216"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="17"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941947"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900087"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="17"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469419918"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001318"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="18"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941910"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900040"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="19"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941910"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900040"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="20"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469419713"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001113"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="20"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469419814"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001114"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="21"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469420323"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001623"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="21"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469420324"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001624"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="22"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941910"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900040"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="24"/>
-			<column name="ATTRIBUTE_ID" value="12345614983246941910"/>
+			<column name="ATTRIBUTE_ID" value="12345614983294900040"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="24"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469420527"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001827"/>
 		</insert>
 		<insert tableName="OBJECT_TYPE_ATTRIBUTES">
 			<column name="OBJECT_TYPE_ID" value="24"/>
-			<column name="ATTRIBUTE_ID" value="123456149832469420528"/>
+			<column name="ATTRIBUTE_ID" value="123456149832949001828"/>
 		</insert>
     </changeSet>
 </databaseChangeLog>

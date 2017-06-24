@@ -6,6 +6,7 @@
 
 	<property name="author" value="javal3"/>
 	<changeSet author="${author}" id="insert into OBJECT_TYPES">
+		<validCheckSum>ANY</validCheckSum>
 		<insert tableName="OBJECT_TYPES">
 			<column name="OBJECT_TYPE_ID" value="10"/>
 			<column name="NAME" value="EntityImpl"/>

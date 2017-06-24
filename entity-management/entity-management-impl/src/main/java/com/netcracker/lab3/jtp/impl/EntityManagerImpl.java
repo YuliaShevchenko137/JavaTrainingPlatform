@@ -164,7 +164,7 @@ public class EntityManagerImpl implements EntityManager {
 
     @Override
     public void insert(Entity entity) {
-        entity.setId( KeyGenerator.generate());
+        entity.setId(KeyGenerator.generate());
         dataBase.execute("insert into dbobjects values(" + entity.getId() + "," +
                 entity.getObjectTypeId() + "," +
                 entity.getParentId() + ")");

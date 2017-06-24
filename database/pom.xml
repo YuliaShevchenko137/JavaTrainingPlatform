@@ -11,6 +11,14 @@
 
     <artifactId>database</artifactId>
 
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
+
     <profiles>
         <profile>
             <id>initializeDB</id>

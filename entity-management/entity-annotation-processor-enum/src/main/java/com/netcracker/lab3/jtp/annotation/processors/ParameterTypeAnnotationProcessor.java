@@ -39,9 +39,9 @@ public class ParameterTypeAnnotationProcessor extends AbstractProcessor {
                     "\t\txsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
                     "\t\thttp://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
                     "\n" +
-                    "\t<property name=\"author\" value=\"javal3\"/>" +
-                    "\n" +
-                    "\t<changeSet author=\"${author}\" id=\"insert into ATTRIBUTE_TYPES\">\n");
+                    "\t<property name=\"author\" value=\"javal3\"/>\n" +
+                    "\t<changeSet author=\"${author}\" id=\"insert into ATTRIBUTE_TYPES\">\n" +
+                    "\t\t<validCheckSum>ANY</validCheckSum>\n");
             parameterTypeWriter.flush();
         } catch (IOException e) {
             log.error(e.getMessage());

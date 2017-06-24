@@ -32,7 +32,7 @@
 
     <bean id="tester" class="org.dbunit.JdbcDatabaseTester">
         <constructor-arg name="driverClass" value="org.h2.Driver"/>
-        <constructor-arg name="connectionUrl" value="jdbc:h2:mem:testdb"/>
+        <constructor-arg name="connectionUrl" value="jdbc:h2:~/test"/>
         <constructor-arg name="username" value="sa"/>
         <constructor-arg name="password" value=""/>
     </bean>
