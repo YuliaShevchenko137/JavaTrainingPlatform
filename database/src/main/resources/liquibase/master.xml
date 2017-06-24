@@ -6,6 +6,9 @@
 
     <include file="src\main\resources\liquibase\changeLogs\initializeDB.xml"/>
     <include file="src\main\resources\liquibase\changeLogs\parameterTypes.xml"/>
+    <include file="src\main\resources\liquibase\changeLogs\objectTypes.xml"/>
+    <include file="src\main\resources\liquibase\changeLogs\attributes.xml"/>
+    <include file="src\main\resources\liquibase\changeLogs\objectTypeAttributes.xml"/>
 
     <!--<includeAll path="changeLogs/" relativeToChangelogFile="true"/>-->
 
