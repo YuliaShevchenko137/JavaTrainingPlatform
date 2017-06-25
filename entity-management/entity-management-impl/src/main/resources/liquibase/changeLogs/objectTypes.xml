@@ -38,6 +38,11 @@
 			<column name="PARENT_ID" value="11"/>
 		</insert>
 		<insert tableName="OBJECT_TYPES">
+			<column name="OBJECT_TYPE_ID" value="25"/>
+			<column name="NAME" value="MaterialType"/>
+			<column name="PARENT_ID" value="10"/>
+		</insert>
+		<insert tableName="OBJECT_TYPES">
 			<column name="OBJECT_TYPE_ID" value="17"/>
 			<column name="NAME" value="Question"/>
 			<column name="PARENT_ID" value="11"/>

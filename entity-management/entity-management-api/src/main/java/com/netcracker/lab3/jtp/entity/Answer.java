@@ -3,10 +3,7 @@ package com.netcracker.lab3.jtp.entity;
 import com.netcracker.lab3.jtp.annotation.Attribute;
 import com.netcracker.lab3.jtp.enums.AttributeType;
 import com.netcracker.lab3.jtp.annotation.DBObjectType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigInteger;
 
@@ -14,6 +11,7 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 @DBObjectType(id = 12)
 public class Answer extends DBObject {
     @Attribute(AttributeType.XML)

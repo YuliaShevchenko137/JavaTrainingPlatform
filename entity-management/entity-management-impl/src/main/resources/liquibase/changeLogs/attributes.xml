@@ -8,107 +8,107 @@
 	<changeSet author="${author}" id="insert into ATTRIBUTES">
 		<validCheckSum>ANY</validCheckSum>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="12345614983294900061"/>
+			<column name="ATTRIBUTE_ID" value="12345614984024599361"/>
 			<column name="NAME" value="description"/>
 			<column name="TYPE_NAME" value="String"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="123456149832949001011"/>
+			<column name="ATTRIBUTE_ID" value="123456149840245994111"/>
 			<column name="NAME" value="type"/>
 			<column name="TYPE_NAME" value="String"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="123456149832949001115"/>
+			<column name="ATTRIBUTE_ID" value="123456149840245994315"/>
 			<column name="NAME" value="userList"/>
 			<column name="TYPE_NAME" value="List"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="123456149832949001623"/>
+			<column name="ATTRIBUTE_ID" value="123456149840245994824"/>
 			<column name="NAME" value="type"/>
 			<column name="TYPE_NAME" value="Object"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="123456149832949001828"/>
+			<column name="ATTRIBUTE_ID" value="12345614984024599372"/>
+			<column name="NAME" value="creationDate"/>
+			<column name="TYPE_NAME" value="Date"/>
+		</insert>
+		<insert tableName="ATTRIBUTES">
+			<column name="ATTRIBUTE_ID" value="123456149840245995129"/>
 			<column name="NAME" value="role"/>
 			<column name="TYPE_NAME" value="Object"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="123456149832949001012"/>
+			<column name="ATTRIBUTE_ID" value="123456149840245994212"/>
 			<column name="NAME" value="data"/>
 			<column name="TYPE_NAME" value="Data"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="12345614983294900040"/>
+			<column name="ATTRIBUTE_ID" value="12345614984024599350"/>
 			<column name="NAME" value="name"/>
 			<column name="TYPE_NAME" value="String"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="12345614983294900075"/>
+			<column name="ATTRIBUTE_ID" value="12345614984024599385"/>
 			<column name="NAME" value="userId"/>
 			<column name="TYPE_NAME" value="Integer"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="123456149832949001113"/>
+			<column name="ATTRIBUTE_ID" value="123456149840245994213"/>
 			<column name="NAME" value="endDate"/>
 			<column name="TYPE_NAME" value="Date"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="123456149832949001114"/>
+			<column name="ATTRIBUTE_ID" value="123456149840245994214"/>
 			<column name="NAME" value="beginDate"/>
 			<column name="TYPE_NAME" value="Date"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="123456149832949001216"/>
+			<column name="ATTRIBUTE_ID" value="123456149840245994517"/>
 			<column name="NAME" value="questionText"/>
 			<column name="TYPE_NAME" value="String"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="123456149832949001624"/>
+			<column name="ATTRIBUTE_ID" value="123456149840245994925"/>
 			<column name="NAME" value="content"/>
 			<column name="TYPE_NAME" value="String"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="123456149832949001827"/>
+			<column name="ATTRIBUTE_ID" value="123456149840245995128"/>
 			<column name="NAME" value="password"/>
 			<column name="TYPE_NAME" value="String"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="12345614983294900073"/>
+			<column name="ATTRIBUTE_ID" value="12345614984024599373"/>
 			<column name="NAME" value="creatorId"/>
 			<column name="TYPE_NAME" value="Integer"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="12345614983294900086"/>
+			<column name="ATTRIBUTE_ID" value="12345614984024599396"/>
 			<column name="NAME" value="taskId"/>
 			<column name="TYPE_NAME" value="Integer"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="12345614983294900087"/>
+			<column name="ATTRIBUTE_ID" value="12345614984024599397"/>
 			<column name="NAME" value="point"/>
 			<column name="TYPE_NAME" value="Decimal"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="12345614983294900062"/>
-			<column name="NAME" value="creationDate"/>
-			<column name="TYPE_NAME" value="Data"/>
-		</insert>
-		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="12345614983294900099"/>
+			<column name="ATTRIBUTE_ID" value="12345614984024599409"/>
 			<column name="NAME" value="testId"/>
 			<column name="TYPE_NAME" value="Integer"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="12345614983294900098"/>
+			<column name="ATTRIBUTE_ID" value="12345614984024599408"/>
 			<column name="NAME" value="correctAnswer"/>
 			<column name="TYPE_NAME" value="XML"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="12345614983294900074"/>
+			<column name="ATTRIBUTE_ID" value="12345614984024599384"/>
 			<column name="NAME" value="state"/>
 			<column name="TYPE_NAME" value="Object"/>
 		</insert>
 		<insert tableName="ATTRIBUTES">
-			<column name="ATTRIBUTE_ID" value="123456149832949001318"/>
+			<column name="ATTRIBUTE_ID" value="123456149840245994519"/>
 			<column name="NAME" value="order"/>
 			<column name="TYPE_NAME" value="Integer"/>
 		</insert>

@@ -1,28 +1,25 @@
 <dataset>
-    <dbobjects object_id="2001" object_type_id="13" parent_id="null"/>
+    <dbobjects OBJECT_ID="2001" OBJECT_TYPE_ID="13" PARENT_ID="[null]"/>
 
-    <params param_id="20001" object_id="2001" attribute_id="1001" integer_value="null" decimal_value="null"
-            string_value="null" xml_type="null" date_value="null" list_id="null" references_object="null"
-            references_param="null" data_value="null"/>
-    <params param_id="20002" object_id="2001" attribute_id="1002" integer_value="null" decimal_value="null"
-            string_value="null" xml_type="null" date_value="2015-10-18" list_id="null" references_object="null"
-            references_param="null" data_value="null"/>
-    <params param_id="20003" object_id="2001" attribute_id="1003" integer_value="null" decimal_value="null"
-            string_value="null" xml_type="null" date_value="null" list_id="null" references_object="null"
-            references_param="null" data_value="null"/>
-    <params param_id="20004" object_id="2001" attribute_id="1004" integer_value="null" decimal_value="null"
-            string_value="null" xml_type="null" date_value="null" list_id="null" references_object="null"
-            references_param="null" data_value="null"/>
-    <params param_id="20005" object_id="2001" attribute_id="1005" integer_value="null" decimal_value="null"
-            string_value="Java" xml_type="null" date_value="null" list_id="null" references_object="null"
-            references_param="null" data_value="null"/>
-    <params param_id="20006" object_id="2001" attribute_id="1006" integer_value="null" decimal_value="null"
-            string_value="null" xml_type="null" date_value="2015-11-13" list_id="null" references_object="null"
-            references_param="null" data_value="null"/>
-    <params param_id="20006" object_id="2001" attribute_id="1007" integer_value="null" decimal_value="null"
-            string_value="null" xml_type="null" date_value="2015-11-16" list_id="null" references_object="null"
-            references_param="null" data_value="null"/>
-    <params param_id="20006" object_id="2001" attribute_id="1008" integer_value="null" decimal_value="null"
-            string_value="null" xml_type="null" date_value="null" list_id="null" references_object="null"
-            references_param="null" data_value="null"/>
+    <parameters PARAMETER_ID="20001" OBJECT_ID="2001" ATTRIBUTE_ID="1001" INTEGER_VALUE="[null]" DECIMAL_VALUE="[null]"
+                STRING_VALUE="[null]" XML_VALUE="[null]" DATE_VALUE="[null]" LIST_VALUE="[null]" OBJECT_VALUE="[null]"
+                PARAMETER_VALUE="[null]" DATA_VALUE="[null]"/>
+    <parameters PARAMETER_ID="20002" OBJECT_ID="2001" ATTRIBUTE_ID="1002" INTEGER_VALUE="[null]" DECIMAL_VALUE="[null]"
+                STRING_VALUE="[null]" XML_VALUE="[null]" DATE_VALUE="[null]" LIST_VALUE="[null]" OBJECT_VALUE="[null]"
+                PARAMETER_VALUE="[null]" DATA_VALUE="[null]"/>
+    <parameters PARAMETER_ID="20003" OBJECT_ID="2001" ATTRIBUTE_ID="1003" INTEGER_VALUE="[null]" DECIMAL_VALUE="[null]"
+                STRING_VALUE="[null]" XML_VALUE="[null]" DATE_VALUE="[null]" LIST_VALUE="[null]" OBJECT_VALUE="[null]"
+                PARAMETER_VALUE="[null]" DATA_VALUE="[null]"/>
+    <parameters PARAMETER_ID="20004" OBJECT_ID="2001" ATTRIBUTE_ID="1004" INTEGER_VALUE="[null]" DECIMAL_VALUE="[null]"
+                STRING_VALUE="[null]" XML_VALUE="[null]" DATE_VALUE="[null]" LIST_VALUE="[null]" OBJECT_VALUE="[null]"
+                PARAMETER_VALUE="[null]" DATA_VALUE="[null]"/>
+    <parameters PARAMETER_ID="20005" OBJECT_ID="2001" ATTRIBUTE_ID="1005" INTEGER_VALUE="[null]" DECIMAL_VALUE="[null]"
+                STRING_VALUE="Java SE" XML_VALUE="[null]" DATE_VALUE="[null]" LIST_VALUE="[null]" OBJECT_VALUE="[null]"
+                PARAMETER_VALUE="[null]" DATA_VALUE="[null]"/>
+    <parameters PARAMETER_ID="20006" OBJECT_ID="2001" ATTRIBUTE_ID="1006" INTEGER_VALUE="[null]" DECIMAL_VALUE="[null]"
+                STRING_VALUE="[null]" XML_VALUE="[null]" DATE_VALUE="[null]" LIST_VALUE="[null]" OBJECT_VALUE="[null]"
+                PARAMETER_VALUE="[null]" DATA_VALUE="[null]"/>
+    <parameters PARAMETER_ID="20006" OBJECT_ID="2001" ATTRIBUTE_ID="1007" INTEGER_VALUE="[null]" DECIMAL_VALUE="[null]"
+                STRING_VALUE="[null]" XML_VALUE="[null]" DATE_VALUE="[null]" LIST_VALUE="[null]" OBJECT_VALUE="[null]"
+                PARAMETER_VALUE="[null]" DATA_VALUE="[null]"/>
 </dataset>

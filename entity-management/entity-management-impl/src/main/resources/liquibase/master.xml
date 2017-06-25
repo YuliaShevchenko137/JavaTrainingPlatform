@@ -10,6 +10,4 @@
     <include file="changeLogs\attributes.xml" relativeToChangelogFile="true"/>
     <include file="changeLogs\objectTypeAttributes.xml" relativeToChangelogFile="true"/>
 
-    <!--<includeAll path="changeLogs/" relativeToChangelogFile="true"/>-->
-
 </databaseChangeLog>

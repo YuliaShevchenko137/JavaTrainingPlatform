@@ -31,7 +31,7 @@ public class ParameterTypeAnnotationProcessor extends AbstractProcessor {
 
     public void initializeWriters() {
         try {
-            Path parameterTypeXMLPath = Paths.get("database/src/main/resources/liquibase/changeLogs/parameterTypes.xml");
+            Path parameterTypeXMLPath = Paths.get("entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/parameterTypes.xml");
             parameterTypeWriter = Files.newBufferedWriter(parameterTypeXMLPath, Charset.forName("UTF-8"));
             parameterTypeWriter.write("<databaseChangeLog\n" +
                     "\t\txmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +

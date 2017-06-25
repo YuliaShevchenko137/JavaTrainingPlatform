@@ -1,11 +1,5 @@
 package com.netcracker.lab3.jtp.db;
 
-import liquibase.Liquibase;
-import liquibase.changelog.DatabaseChangeLog;
-import liquibase.database.Database;
-import liquibase.database.DatabaseFactory;
-import liquibase.database.jvm.JdbcConnection;
-import liquibase.resource.FileSystemResourceAccessor;
 import lombok.extern.slf4j.Slf4j;
 import org.dbunit.*;
 import org.dbunit.dataset.DataSetException;
@@ -34,18 +28,6 @@ public class SpringDataBaseTest extends DBTestCase {
         ApplicationContext context = new ClassPathXmlApplicationContext("Beans/DataBaseBeans.xml");
         tester = (IDatabaseTester) context.getBean("tester");
         dataBase = (SpringDataBase) context.getBean("testDataBase");
-        java.sql.Connection connection = null;
-        try {
-            connection = dataBase.getConnection();
-            Liquibase liquibase = null;
-            DatabaseChangeLog changeLog = new DatabaseChangeLog();
-            changeLog.setPhysicalFilePath("\\database\\src\\main\\resources\\liquibase\\master.xml");
-            Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
-            liquibase = new Liquibase(changeLog, new FileSystemResourceAccessor(), database);
-            liquibase.update("Test");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
   public void testDMLStatment() {
@@ -77,9 +59,9 @@ public class SpringDataBaseTest extends DBTestCase {
         } catch (DataSetException | SQLException e) {
             log.error(e.getMessage());
         } catch (DatabaseUnitException e) {
-            log.debug(e.getMessage());
+            log.error(e.getMessage());
         } catch (Exception e) {
-            log.debug(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             dataBase.execute("drop table a");
         }

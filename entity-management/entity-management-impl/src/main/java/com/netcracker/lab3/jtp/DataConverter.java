@@ -14,19 +14,35 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
 
+import static java.util.Objects.isNull;
+
 @NoArgsConstructor
 @Slf4j
+@SuppressWarnings("PMD.CyclomaticComplexity")
 public class DataConverter {
-    public Object dataConvert(Class fieldClass, String value){
-        if (((Attribute)fieldClass.getAnnotation(Attribute.class)).value().equals(AttributeType.Object)) {
+    public Object dataConvert(Field field, String value){
+        if (field.getAnnotation(Attribute.class).value().equals(AttributeType.Object)) {
             ApplicationContext context = new ClassPathXmlApplicationContext("Beans/EntityManagerBeans.xml");
             EntityManagerImpl entityManager = (EntityManagerImpl)context.getBean("EntityManager");
             return entityManager.getObjectById(new BigInteger(value));
-        } else if (((Attribute)fieldClass.getAnnotation(Attribute.class)).value().equals(AttributeType.Parameter)) {
+        } else if (field.getAnnotation(Attribute.class).value().equals(AttributeType.Parameter)) {
             ApplicationContext context = new ClassPathXmlApplicationContext("Beans/EntityManagerBeans.xml");
             EntityManagerImpl entityManager = (EntityManagerImpl)context.getBean("EntityManager");
             return entityManager.getParameterById(new BigInteger(value));
-        } else if(fieldClass.equals(String.class)) {
+        } else if(field.getType().equals(String.class)) {
+            return value;
+        } else if(field.getType().equals(BigDecimal.class)) {
+            return new BigDecimal(value);
+        } else if(field.getType().equals(BigInteger.class)) {
+            return new BigInteger(value);
+        } else if(field.getType().equals(Calendar.class)) {
+            return calendarFromData(value);
+        }
+        return value;
+    }
+
+    public Object dataConvert(Class fieldClass, String value){
+        if(fieldClass.equals(String.class)) {
             return value;
         } else if(fieldClass.equals(BigDecimal.class)) {
             return new BigDecimal(value);
@@ -43,6 +59,7 @@ public class DataConverter {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2]),
                 Integer.parseInt(strings[3]), Integer.parseInt(strings[4]), Integer.parseInt(strings[5]));
+        calendar.set(Calendar.MILLISECOND, 0);
         return calendar;
     }
 
@@ -55,11 +72,16 @@ public class DataConverter {
 
     public String convertToData(Entity entity, Field field) {
         try {
+            field.setAccessible(true);
+            if(isNull(field.get(entity))) {
+                return null;
+            }
             if (field.getAnnotation(Attribute.class).value().equals(AttributeType.Date)) {
                 Calendar calendar = (Calendar) field.get(entity);
                 return calendarToData(calendar);
-            } else if (field.getAnnotation(Attribute.class).value().equals(AttributeType.Data) ||
-                    field.getAnnotation(Attribute.class).value().equals(AttributeType.String) ||
+            } else if (field.getAnnotation(Attribute.class).value().equals(AttributeType.Data)) {
+                return null;                        ///////////////!!!!!!!!!!!!!!!
+            } else if ( field.getAnnotation(Attribute.class).value().equals(AttributeType.String) ||
                     field.getAnnotation(Attribute.class).value().equals(AttributeType.XML)) {
                 return "'" + field.get(entity).toString() + "'";
             }

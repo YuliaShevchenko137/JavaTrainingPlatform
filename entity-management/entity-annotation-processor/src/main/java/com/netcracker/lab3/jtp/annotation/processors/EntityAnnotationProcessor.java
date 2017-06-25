@@ -44,7 +44,7 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
 
     public void initializeWriters(){
         try {
-            Path objectTypesXMLPath = Paths.get("database/src/main/resources/liquibase/changeLogs/objectTypes.xml");
+            Path objectTypesXMLPath = Paths.get("entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/objectTypes.xml");
             typeWriter = Files.newBufferedWriter(objectTypesXMLPath, Charset.forName("UTF-8"));
             typeWriter.write("<databaseChangeLog\n" +
                     "\t\txmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
@@ -57,7 +57,7 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
                     "\t\t<validCheckSum>ANY</validCheckSum>\n");
             typeWriter.flush();
 
-            Path attributesXMLPath = Paths.get("database/src/main/resources/liquibase/changeLogs/attributes.xml");
+            Path attributesXMLPath = Paths.get("entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/attributes.xml");
             attributeWriter = Files.newBufferedWriter(attributesXMLPath, Charset.forName("UTF-8"));
             attributeWriter.write("<databaseChangeLog\n" +
                     "\t\txmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
@@ -70,7 +70,7 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
                     "\t\t<validCheckSum>ANY</validCheckSum>\n");
             attributeWriter.flush();
 
-            Path objectAttributeXMLPath = Paths.get("database/src/main/resources/liquibase/changeLogs/objectTypeAttributes.xml");
+            Path objectAttributeXMLPath = Paths.get("entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/objectTypeAttributes.xml");
             objectAttributeWriter = Files.newBufferedWriter(objectAttributeXMLPath, Charset.forName("UTF-8"));
             objectAttributeWriter.write("<databaseChangeLog\n" +
                     "\t\txmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +

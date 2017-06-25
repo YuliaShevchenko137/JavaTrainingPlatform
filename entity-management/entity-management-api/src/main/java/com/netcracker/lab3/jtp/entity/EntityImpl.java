@@ -1,6 +1,7 @@
 package com.netcracker.lab3.jtp.entity;
 
 import com.netcracker.lab3.jtp.annotation.DBObjectType;
+import lombok.EqualsAndHashCode;
 
 import java.lang.reflect.Field;
 import java.math.BigInteger;
@@ -8,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @DBObjectType(id = 10)
+@EqualsAndHashCode
 public class EntityImpl implements Entity {
 
     private BigInteger id;
@@ -15,29 +17,29 @@ public class EntityImpl implements Entity {
 
     public void setValue(String fieldName, Object value){
         Field field = getField(fieldName);
-        try {
-            field.set(this, value);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        setValue(field, value);
     }
 
     public void setValue(Field field, Object value){
+        field.setAccessible(true);
         try {
             field.set(this, value);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        field.setAccessible(false);
     }
 
     @Override
     public Object getValue(Field field) {
+        field.setAccessible(true);
         Object object = null;
         try {
             object =  field.get(this);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        field.setAccessible(false);
         return object;
     }
 
