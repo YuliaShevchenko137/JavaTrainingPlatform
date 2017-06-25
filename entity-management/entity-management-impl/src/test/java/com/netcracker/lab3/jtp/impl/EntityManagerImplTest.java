@@ -50,14 +50,15 @@ public class EntityManagerImplTest extends DBTestCase{
     }
 
     @Override
-    protected void setUp(){
+    protected void setUp() {
         ApplicationContext context = new ClassPathXmlApplicationContext("Beans/EntityManagerBeans.xml");
         tester = (IDatabaseTester) context.getBean("tester");
         SpringDataBase springDataBase = (SpringDataBase) context.getBean("testDataBase");
         entityManager = new EntityManagerImpl(springDataBase);
         java.sql.Connection connection = null;
-        springDataBase.execute("delete databasechangelog");
-        springDataBase.execute("delete databasechangeloglock");
+//        use after changing changesets after fiest build
+//        springDataBase.execute("delete databasechangelog");
+//        springDataBase.execute("delete databasechangeloglock");
         try {
             connection = entityManager.getConnection();
             Liquibase liquibase = null;
@@ -68,6 +69,8 @@ public class EntityManagerImplTest extends DBTestCase{
             e.printStackTrace();
             log.error(e.getMessage());
         }
+        springDataBase.execute("delete parameters");
+        springDataBase.execute("delete dbobjects");
     }
 
     public void testInsert(){
