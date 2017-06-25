@@ -56,8 +56,8 @@ public class EntityManagerImplTest extends DBTestCase{
         SpringDataBase springDataBase = (SpringDataBase) context.getBean("testDataBase");
         entityManager = new EntityManagerImpl(springDataBase);
         java.sql.Connection connection = null;
-//        springDataBase.execute("delete databasechangelog");
-//        springDataBase.execute("delete databasechangeloglock");
+        springDataBase.execute("delete databasechangelog");
+        springDataBase.execute("delete databasechangeloglock");
         try {
             connection = entityManager.getConnection();
             Liquibase liquibase = null;
