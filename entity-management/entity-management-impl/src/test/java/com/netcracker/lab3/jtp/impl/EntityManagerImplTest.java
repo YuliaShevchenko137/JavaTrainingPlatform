@@ -20,8 +20,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.util.Calendar;
+
+import static org.dbunit.PropertiesBasedJdbcDatabaseTester.*;
 
 @Slf4j
 @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.SignatureDeclareThrowsException",
@@ -29,36 +30,33 @@ import java.util.Calendar;
 , "PMD.FinalFieldCouldBeStatic"})
 public class EntityManagerImplTest extends DBTestCase{
 
-    protected IDatabaseTester tester;
-    EntityManagerImpl entityManager;
+    private final IDatabaseTester tester;
+    private final EntityManagerImpl entityManager;
 
-    private final String[] parametersExpectedColumns = {"INTEGER_VALUE", "DECIMAL_VALUE", "STRING_VALUE", "XML_VALUE",
+    private static final String[] PARAMETERS_EXPECTED_COLUMNS = {"INTEGER_VALUE", "DECIMAL_VALUE", "STRING_VALUE", "XML_VALUE",
             "DATE_VALUE", "DATE_VALUE", "LIST_VALUE", "OBJECT_VALUE", "PARAMETER_VALUE"};
-    private final String[] objectsExpectedColumns = {"OBJECT_TYPE_ID"};
-    private final String parametersTable = "PARAMETERS";
-    private final String[] ignoreParameters = {"PARAMETER_ID","OBJECT_ID","ATTRIBUTE_ID"};
-    private final String objectsTable = "DBOBJECTS";
-    private final String[] ignoreObjects = {"OBJECT_ID"};
-    private final String[] testedTables = {"DBOBJECTS", "PARAMETERS"};
+    private static final String[] OBJECTS_EXPECTED_COLUMNS = {"OBJECT_TYPE_ID"};
+    private static final String PARAMETERS_TABLE = "PARAMETERS";
+    private static final String[] IGNORE_PARAMETERS = {"PARAMETER_ID","OBJECT_ID","ATTRIBUTE_ID"};
+    private static final String OBJECTS_TABLE = "DBOBJECTS";
+    private static final String[] IGNORE_OBJECTS = {"OBJECT_ID"};
+    private static final String[] TESTED_TABLES = {"DBOBJECTS", "PARAMETERS"};
 
     public EntityManagerImplTest(String name) {
         super(name);
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "org.h2.Driver");
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:h2:~/test");
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "sa");
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "");
-    }
+        System.setProperty(DBUNIT_DRIVER_CLASS, "org.h2.Driver");
+        System.setProperty(DBUNIT_CONNECTION_URL, "jdbc:h2:~/test");
+        System.setProperty(DBUNIT_USERNAME, "sa");
+        System.setProperty(DBUNIT_PASSWORD, "");
+//        use after changing changesets(after first build)
+//        springDataBase.execute("delete databasechangelog");
+//        springDataBase.execute("delete databasechangeloglock");
 
-    @Override
-    protected void setUp() {
         ApplicationContext context = new ClassPathXmlApplicationContext("Beans/EntityManagerBeans.xml");
         tester = (IDatabaseTester) context.getBean("tester");
         SpringDataBase springDataBase = (SpringDataBase) context.getBean("testDataBase");
         entityManager = new EntityManagerImpl(springDataBase);
         java.sql.Connection connection = null;
-//        use after changing changesets after fiest build
-//        springDataBase.execute("delete databasechangelog");
-//        springDataBase.execute("delete databasechangeloglock");
         try {
             connection = entityManager.getConnection();
             Liquibase liquibase = null;
@@ -66,11 +64,14 @@ public class EntityManagerImplTest extends DBTestCase{
             liquibase = new Liquibase("src\\main\\resources\\liquibase\\master.xml", new FileSystemResourceAccessor(), database);
             liquibase.update(new Contexts());
         } catch (Exception e) {
-            e.printStackTrace();
             log.error(e.getMessage());
         }
-        springDataBase.execute("delete parameters");
-        springDataBase.execute("delete dbobjects");
+    }
+
+    @Override
+    protected void setUp() {
+        entityManager.execute("delete parameters");
+        entityManager.execute("delete dbobjects");
     }
 
     public void testInsert(){
@@ -88,26 +89,19 @@ public class EntityManagerImplTest extends DBTestCase{
 
         entityManager.insert(course);
         try {
-            IDataSet data = tester.getConnection().createDataSet(testedTables);
+            IDataSet data = tester.getConnection().createDataSet(TESTED_TABLES);
             IDataSet expected = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
                     .getResourceAsStream("DataSet/insertTest.xml"));
             ReplacementDataSet replacedDataSet = new ReplacementDataSet(expected);
             replacedDataSet.addReplacementObject("[null]", null);
-            ITable sortedExpected = new SortedTable(replacedDataSet.getTable(objectsTable), objectsExpectedColumns);
-            ITable sortedActual = new SortedTable(data.getTable(objectsTable), objectsExpectedColumns);
-            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, ignoreObjects);
-            sortedActual = new SortedTable(data.getTable(parametersTable), parametersExpectedColumns);
-            sortedExpected = new SortedTable(replacedDataSet.getTable(parametersTable), parametersExpectedColumns);
-            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, ignoreParameters);
+            ITable sortedExpected = new SortedTable(replacedDataSet.getTable(OBJECTS_TABLE), OBJECTS_EXPECTED_COLUMNS);
+            ITable sortedActual = new SortedTable(data.getTable(OBJECTS_TABLE), OBJECTS_EXPECTED_COLUMNS);
+            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, IGNORE_OBJECTS);
+            sortedActual = new SortedTable(data.getTable(PARAMETERS_TABLE), PARAMETERS_EXPECTED_COLUMNS);
+            sortedExpected = new SortedTable(replacedDataSet.getTable(PARAMETERS_TABLE), PARAMETERS_EXPECTED_COLUMNS);
+            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, IGNORE_PARAMETERS);
         } catch (Exception e) {
-            e.printStackTrace();
             log.error(e.getMessage());
-        } finally {
-            try {
-                entityManager.getConnection().rollback();
-            } catch (SQLException e) {
-                log.error(e.getMessage());
-            }
         }
     }
 
@@ -118,27 +112,20 @@ public class EntityManagerImplTest extends DBTestCase{
         course.setName("New database");
         entityManager.update(course);
         try {
-            IDataSet data = tester.getConnection().createDataSet(testedTables);
+            IDataSet data = tester.getConnection().createDataSet(TESTED_TABLES);
             IDataSet expected = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
                     .getResourceAsStream("DataSet/updateTest.xml"));
             ReplacementDataSet replacedDataSet = new ReplacementDataSet(expected);
             replacedDataSet.addReplacementObject("[null]", null);
 
-            ITable sortedExpected = new SortedTable(replacedDataSet.getTable(objectsTable), objectsExpectedColumns);
-            ITable sortedActual = new SortedTable(data.getTable(objectsTable), objectsExpectedColumns);
-            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, ignoreObjects);
-            sortedActual = new SortedTable(data.getTable(parametersTable), parametersExpectedColumns);
-            sortedExpected = new SortedTable(replacedDataSet.getTable(parametersTable), parametersExpectedColumns);
-            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, ignoreParameters);
+            ITable sortedExpected = new SortedTable(replacedDataSet.getTable(OBJECTS_TABLE), OBJECTS_EXPECTED_COLUMNS);
+            ITable sortedActual = new SortedTable(data.getTable(OBJECTS_TABLE), OBJECTS_EXPECTED_COLUMNS);
+            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, IGNORE_OBJECTS);
+            sortedActual = new SortedTable(data.getTable(PARAMETERS_TABLE), PARAMETERS_EXPECTED_COLUMNS);
+            sortedExpected = new SortedTable(replacedDataSet.getTable(PARAMETERS_TABLE), PARAMETERS_EXPECTED_COLUMNS);
+            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, IGNORE_PARAMETERS);
         } catch (Exception e) {
-            e.printStackTrace();
             log.error(e.getMessage());
-        } finally {
-            try {
-                entityManager.getConnection().rollback();
-            } catch (SQLException e) {
-                log.error(e.getMessage());
-            }
         }
     }
 
@@ -147,39 +134,32 @@ public class EntityManagerImplTest extends DBTestCase{
         course.setName("Java SE");
         entityManager.insert(course);
         try {
-            IDataSet data = tester.getConnection().createDataSet(testedTables);
+            IDataSet data = tester.getConnection().createDataSet(TESTED_TABLES);
             IDataSet expected = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
                     .getResourceAsStream("DataSet/beforeDeleteTest.xml"));
             ReplacementDataSet replacedDataSet = new ReplacementDataSet(expected);
             replacedDataSet.addReplacementObject("[null]", null);
-            ITable sortedExpected = new SortedTable(replacedDataSet.getTable(objectsTable), objectsExpectedColumns);
-            ITable sortedActual = new SortedTable(data.getTable(objectsTable), objectsExpectedColumns);
-            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, ignoreObjects);
-            sortedActual = new SortedTable(data.getTable(parametersTable), parametersExpectedColumns);
-            sortedExpected = new SortedTable(replacedDataSet.getTable(parametersTable), parametersExpectedColumns);
-            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, ignoreParameters);
+            ITable sortedExpected = new SortedTable(replacedDataSet.getTable(OBJECTS_TABLE), OBJECTS_EXPECTED_COLUMNS);
+            ITable sortedActual = new SortedTable(data.getTable(OBJECTS_TABLE), OBJECTS_EXPECTED_COLUMNS);
+            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, IGNORE_OBJECTS);
+            sortedActual = new SortedTable(data.getTable(PARAMETERS_TABLE), PARAMETERS_EXPECTED_COLUMNS);
+            sortedExpected = new SortedTable(replacedDataSet.getTable(PARAMETERS_TABLE), PARAMETERS_EXPECTED_COLUMNS);
+            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, IGNORE_PARAMETERS);
 
             entityManager.delete(entityManager.getObjectsByType(Course.class).get(0));
-            data = tester.getConnection().createDataSet(testedTables);
+            data = tester.getConnection().createDataSet(TESTED_TABLES);
             expected = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
                     .getResourceAsStream("DataSet/afterDeleteTest.xml"));
             replacedDataSet = new ReplacementDataSet(expected);
             replacedDataSet.addReplacementObject("[null]", null);
-            sortedExpected = new SortedTable(replacedDataSet.getTable(objectsTable), objectsExpectedColumns);
-            sortedActual = new SortedTable(data.getTable(objectsTable), objectsExpectedColumns);
-            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, ignoreObjects);
-            sortedActual = new SortedTable(data.getTable(parametersTable), parametersExpectedColumns);
-            sortedExpected = new SortedTable(replacedDataSet.getTable(parametersTable), parametersExpectedColumns);
-            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, ignoreParameters);
+            sortedExpected = new SortedTable(replacedDataSet.getTable(OBJECTS_TABLE), OBJECTS_EXPECTED_COLUMNS);
+            sortedActual = new SortedTable(data.getTable(OBJECTS_TABLE), OBJECTS_EXPECTED_COLUMNS);
+            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, IGNORE_OBJECTS);
+            sortedActual = new SortedTable(data.getTable(PARAMETERS_TABLE), PARAMETERS_EXPECTED_COLUMNS);
+            sortedExpected = new SortedTable(replacedDataSet.getTable(PARAMETERS_TABLE), PARAMETERS_EXPECTED_COLUMNS);
+            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, IGNORE_PARAMETERS);
         } catch (Exception e) {
-            e.printStackTrace();
             log.error(e.getMessage());
-        } finally {
-            try {
-                entityManager.getConnection().rollback();
-            } catch (SQLException e) {
-                log.error(e.getMessage());
-            }
         }
     }
 

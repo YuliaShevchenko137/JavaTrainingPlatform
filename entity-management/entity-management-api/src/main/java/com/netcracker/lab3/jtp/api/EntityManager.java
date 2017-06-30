@@ -28,4 +28,6 @@ public interface EntityManager {
     Object getParameterById(BigInteger id);
 
     Entity createObject(Entity entity);
+
+    void execute(String request);
 }

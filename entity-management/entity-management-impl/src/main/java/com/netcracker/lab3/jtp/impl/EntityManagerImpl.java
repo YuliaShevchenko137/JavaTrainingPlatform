@@ -39,7 +39,7 @@ public class EntityManagerImpl implements EntityManager {
     @Override
     public Object getParameterById(BigInteger id) {
         Entity entity = (Entity) dataBase.executeObjectQuery(
-                "select type.name from dbobjects entity join object_types type " +
+                "select type.name, entity.object_id, entity.parent_id from dbobjects entity join object_types type " +
                         "on (entity.object_type_id = type.object_type_id) " +
                         "join parameters params on (params.object_id = entity.object_id) where params.PARAMETER_ID = " + id,
                 new DBObjectRowMapper());
@@ -65,7 +65,7 @@ public class EntityManagerImpl implements EntityManager {
     @Override
     public Entity getObjectById(BigInteger id) {
         Entity entity = (Entity) dataBase.executeObjectQuery(
-                "select type.name from dbobjects entity join object_types type " +
+                "select type.name, entity.object_id, entity.parent_id from dbobjects entity join object_types type " +
                         "on (entity.object_type_id = type.object_type_id) where entity.object_id = " + id,
                 new DBObjectRowMapper());
         entity.setId(id);
@@ -115,9 +115,14 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     @Override
+    public void execute(String request) {
+        dataBase.execute(request);
+    }
+
+    @Override
     public List<Entity> getObjectsByType(BigInteger id) {
         ArrayList<Entity> entities = new ArrayList<>(dataBase.executeListQuery(
-                "select type.name from dbobjects entity join object_types type " +
+                "select type.name, entity.object_id, entity.parent_id from dbobjects entity join object_types type " +
                         "on (entity.object_type_id = type.object_type_id) where entity.object_ID = " + id,
                 new DBObjectRowMapper()));
         for (int i = 0; i < entities.size(); i++) {
