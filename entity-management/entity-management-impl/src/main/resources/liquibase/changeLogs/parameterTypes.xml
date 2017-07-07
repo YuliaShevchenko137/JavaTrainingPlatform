@@ -1,38 +1,38 @@
 <databaseChangeLog
-		xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.8"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.8
-		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd">
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.8"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.8
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd">
 
-	<property name="author" value="javal3"/>
-	<changeSet author="${author}" id="insert into ATTRIBUTE_TYPES">
-		<validCheckSum>ANY</validCheckSum>
+    <property name="author" value="javal3"/>
+    <changeSet author="${author}" id="insert into ATTRIBUTE_TYPES">
+        <validCheckSum>ANY</validCheckSum>
 		<insert tableName="ATTRIBUTE_TYPES">
-			<column name="TYPE_NAME" value="String"/>
+			    <column name="TYPE_NAME" value="String"/>
 		</insert>
 		<insert tableName="ATTRIBUTE_TYPES">
-			<column name="TYPE_NAME" value="Data"/>
+			    <column name="TYPE_NAME" value="Data"/>
 		</insert>
 		<insert tableName="ATTRIBUTE_TYPES">
-			<column name="TYPE_NAME" value="Date"/>
+			    <column name="TYPE_NAME" value="Date"/>
 		</insert>
 		<insert tableName="ATTRIBUTE_TYPES">
-			<column name="TYPE_NAME" value="Decimal"/>
+			    <column name="TYPE_NAME" value="Decimal"/>
 		</insert>
 		<insert tableName="ATTRIBUTE_TYPES">
-			<column name="TYPE_NAME" value="Integer"/>
+			    <column name="TYPE_NAME" value="Integer"/>
 		</insert>
 		<insert tableName="ATTRIBUTE_TYPES">
-			<column name="TYPE_NAME" value="List"/>
+			    <column name="TYPE_NAME" value="List"/>
 		</insert>
 		<insert tableName="ATTRIBUTE_TYPES">
-			<column name="TYPE_NAME" value="Object"/>
+			    <column name="TYPE_NAME" value="Object"/>
 		</insert>
 		<insert tableName="ATTRIBUTE_TYPES">
-			<column name="TYPE_NAME" value="Parameter"/>
+			    <column name="TYPE_NAME" value="Parameter"/>
 		</insert>
 		<insert tableName="ATTRIBUTE_TYPES">
-			<column name="TYPE_NAME" value="XML"/>
+			    <column name="TYPE_NAME" value="XML"/>
 		</insert>
 	</changeSet>
 </databaseChangeLog>

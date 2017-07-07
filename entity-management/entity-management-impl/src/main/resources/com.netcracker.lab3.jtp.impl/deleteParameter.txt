@@ -1,0 +1,2 @@
+delete PARAMETERS where object_id = %1$s and attribute_id =
+    (select attribute_id from attributes where name = '%2$s' and type_name = '%3$s')

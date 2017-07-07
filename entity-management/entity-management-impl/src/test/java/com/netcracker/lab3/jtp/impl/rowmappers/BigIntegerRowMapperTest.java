@@ -1,4 +1,4 @@
-package com.netcracker.lab3.jtp.rowmappers;
+package com.netcracker.lab3.jtp.impl.rowmappers;
 
 import com.netcracker.lab3.jtp.db.SpringDataBase;
 import junit.framework.TestCase;

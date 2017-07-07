@@ -9,25 +9,23 @@ import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import com.netcracker.lab3.jtp.KeyGenerator;
+import com.netcracker.lab3.jtp.file.FileReader;
+import com.netcracker.lab3.jtp.file.FileWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static java.util.Objects.isNull;
+import static com.netcracker.lab3.jtp.annotation.processors.ParameterTypeAnnotationProcessor.*;
 
 @SupportedAnnotationTypes({"com.netcracker.lab3.jtp.annotation.DBObjectType"})
 @AutoService(Processor.class)
@@ -35,53 +33,26 @@ import static java.util.Objects.isNull;
 public class EntityAnnotationProcessor extends AbstractProcessor {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-    private BufferedWriter typeWriter;
-    private BufferedWriter attributeWriter;
-    private BufferedWriter objectAttributeWriter;
+    private final static String OBJECT_TYPES_PATH = "entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/objectTypes.xml";
+    private final static String ATTRIBUTES_PATH = "entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/attributes.xml";
+    private final static String OBJECT_ATTRIBUTE_PATH = "entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/objectTypeAttributes.xml";
 
-    Set<DBAttribute> attributes = new HashSet<>();
-    List<ObjectTypeAttribute> objectAttributes = new ArrayList<>();
+
+    private final Set<DBAttribute> attributes = new HashSet<>();
+    private final List<ObjectTypeAttribute> objectAttributes = new ArrayList<>();
+    private final List<DBObject> withOutParent = new ArrayList<>();
+    private final List<DBObject> withParent = new ArrayList<>();
 
     public void initializeWriters(){
         try {
-            Path objectTypesXMLPath = Paths.get("entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/objectTypes.xml");
-            typeWriter = Files.newBufferedWriter(objectTypesXMLPath, Charset.forName("UTF-8"));
-            typeWriter.write("<databaseChangeLog\n" +
-                    "\t\txmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
-                    "\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-                    "\t\txsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
-                    "\t\thttp://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
-                    "\n" +
-                    "\t<property name=\"author\" value=\"javal3\"/>\n" +
-                    "\t<changeSet author=\"${author}\" id=\"insert into OBJECT_TYPES\">\n" +
-                    "\t\t<validCheckSum>ANY</validCheckSum>\n");
-            typeWriter.flush();
+            FileWriter.writeFile(OBJECT_TYPES_PATH,
+                    String.format(FileReader.readFile(LIQUIBASE_TOP), "insert into OBJECT_TYPES"));
 
-            Path attributesXMLPath = Paths.get("entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/attributes.xml");
-            attributeWriter = Files.newBufferedWriter(attributesXMLPath, Charset.forName("UTF-8"));
-            attributeWriter.write("<databaseChangeLog\n" +
-                    "\t\txmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
-                    "\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-                    "\t\txsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
-                    "\t\thttp://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
-                    "\n" +
-                    "\t<property name=\"author\" value=\"javal3\"/>\n" +
-                    "\t<changeSet author=\"${author}\" id=\"insert into ATTRIBUTES\">\n" +
-                    "\t\t<validCheckSum>ANY</validCheckSum>\n");
-            attributeWriter.flush();
+            FileWriter.writeFile(ATTRIBUTES_PATH,
+                    String.format(FileReader.readFile(LIQUIBASE_TOP), "insert into ATTRIBUTES"));
 
-            Path objectAttributeXMLPath = Paths.get("entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/objectTypeAttributes.xml");
-            objectAttributeWriter = Files.newBufferedWriter(objectAttributeXMLPath, Charset.forName("UTF-8"));
-            objectAttributeWriter.write("<databaseChangeLog\n" +
-                    "\t\txmlns=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\"\n" +
-                    "\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-                    "\t\txsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog/1.8\n" +
-                    "\t\thttp://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd\">\n" +
-                    "\n" +
-                    "\t<property name=\"author\" value=\"javal3\"/>\n" +
-                    "\t<changeSet author=\"${author}\" id=\"insert into OBJECT_TYPE_ATTRIBUTES\">\n" +
-                    "\t\t<validCheckSum>ANY</validCheckSum>\n");
-            objectAttributeWriter.flush();
+            FileWriter.writeFile(OBJECT_ATTRIBUTE_PATH,
+                    String.format(FileReader.readFile(LIQUIBASE_TOP), "insert into OBJECT_TYPE_ATTRIBUTES"));
         } catch (IOException e) {
             log.error(e.getMessage());
         }
@@ -90,37 +61,14 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
     @Override
     @SuppressWarnings("PMD.AvoidDeeplyNestedIfStmts")
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        if(!annotations.isEmpty()) {
+        if (!annotations.isEmpty()) {
             initializeWriters();
-            ArrayList<DBObject> withOutParent = new ArrayList<>();
-            ArrayList<DBObject> withParent = new ArrayList<>();
-            if (annotations != null) {
-                for (TypeElement annotation : annotations) {
-                    if (annotation.getSimpleName().contentEquals(DBObjectType.class.getSimpleName())) {
-                        Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
-                        for (Element element : annotatedElements) {
-                            DBObject object = new DBObject(element);
-                            if (isNull(object.getParentId()) || containId(withParent, object)) {
-                                dealDBObject(object);
-                                withParent.add(object);
-                                for (int i = 0; i < withOutParent.size(); i++) {
-                                    if(containId(withParent, withOutParent.get(i))) {
-                                        dealDBObject(withOutParent.get(i));
-                                        withParent.add(withOutParent.get(i));
-                                        withOutParent.remove(i);
-                                    }
-                                }
-                            } else {
-                                withOutParent.add(object);
-                            }
-
-                        }
-                    }
+            for (TypeElement annotation : annotations) {
+                if (annotation.getSimpleName().contentEquals(DBObjectType.class.getSimpleName())) {
+                    dealElements(roundEnv.getElementsAnnotatedWith(annotation));
                 }
                 try {
-                    typeWriter.write("\t</changeSet>\n" +
-                            "</databaseChangeLog>");
-                    typeWriter.flush();
+                    FileWriter.appendFile(OBJECT_TYPES_PATH, FileReader.readFile(LIQUIBASE_BOTTOM));
                 } catch (IOException e) {
                     log.error(e.getMessage());
                 }
@@ -131,20 +79,43 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
         return true;
     }
 
-    public void dealDBObject(DBObject object) {
+    public void dealElements(Set<? extends Element> elements){
+        for (Element element : elements) {
+            DBObject object = new DBObject(element);
+            if (isNull(object.getParentId()) || containId(withParent, object)) {
+                objectTypesGenerate(object);
+                withParent.add(object);
+                for (int i = 0; i < withOutParent.size(); i++) {
+                    if (containId(withParent, withOutParent.get(i))) {
+                        objectTypesGenerate(withOutParent.get(i));
+                        withParent.add(withOutParent.get(i));
+                        withOutParent.remove(i);
+                    }
+                }
+            } else {
+                withOutParent.add(object);
+            }
+        }
+    }
+
+    public void objectTypesGenerate(DBObject object) {
         try {
-            typeWriter.write("\t\t<insert tableName=\"OBJECT_TYPES\">\n" +
-                    "\t\t\t<column name=\"OBJECT_TYPE_ID\" value=\"" +
-                    object.getId() + "\"/>\n" +
-                    "\t\t\t<column name=\"NAME\" value=\"" +
-                    object.getName() + "\"/>\n" +
-                    "\t\t\t<column name=\"PARENT_ID\" value=\"" +
-                    object.getParentId() + "\"/>\n" +
-                    "\t\t</insert>\n");
-            typeWriter.flush();
+            String colomns = String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                    "OBJECT_TYPE_ID",object.getId()) +
+                    String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                            "NAME",object.getName()) +
+                    String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                            "PARENT_ID",object.getParentId()).replace("\n", "");
+            String insert = String.format(FileReader.readFile(LIQUIBASE_INSERT),
+                    "OBJECT_TYPES", colomns);
+            FileWriter.appendFile(OBJECT_TYPES_PATH, insert);
         } catch (IOException ex) {
             log.error(ex.getMessage());
         }
+        objectOrder(object);
+    }
+
+    public void objectOrder(DBObject object){
         List<? extends Element> list = object.getAnClass().getEnclosedElements();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getAnnotation(Attribute.class) != null) {
@@ -166,20 +137,21 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
     public void attributesGenerate() {
         for (DBAttribute attribute : attributes) {
             try {
-                attributeWriter.write("\t\t<insert tableName=\"ATTRIBUTES\">\n" +
-                        "\t\t\t<column name=\"ATTRIBUTE_ID\" value=\"" + attribute.getId() + "\"/>\n" +
-                        "\t\t\t<column name=\"NAME\" value=\"" + attribute.getName() + "\"/>\n" +
-                        "\t\t\t<column name=\"TYPE_NAME\" value=\"" + attribute.getType() + "\"/>\n" +
-                        "\t\t</insert>\n");
-                attributeWriter.flush();
+                String colomns = String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                        "ATTRIBUTE_ID",attribute.getId()) +
+                        String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                                "NAME",attribute.getName()) +
+                        String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                                "TYPE_NAME",attribute.getType()).replace("\n", "");
+                String insert = String.format(FileReader.readFile(LIQUIBASE_INSERT),
+                        "ATTRIBUTES", colomns);
+                FileWriter.appendFile(ATTRIBUTES_PATH, insert);
             } catch (IOException e) {
                 log.error(e.getMessage());
             }
         }
         try {
-            attributeWriter.write("\t</changeSet>\n" +
-                    "</databaseChangeLog>");
-            attributeWriter.flush();
+            FileWriter.appendFile(ATTRIBUTES_PATH, FileReader.readFile(LIQUIBASE_BOTTOM));
         } catch (IOException e) {
             log.error(e.getMessage());
         }
@@ -188,21 +160,19 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
     public void objectAttributeGenerate() {
         for (int i = 0; i < objectAttributes.size(); i++) {
             try {
-                objectAttributeWriter.write("\t\t<insert tableName=\"OBJECT_TYPE_ATTRIBUTES\">\n" +
-                        "\t\t\t<column name=\"OBJECT_TYPE_ID\" value=\"" +
-                        objectAttributes.get(i).getObjectTypeId() + "\"/>\n" +
-                        "\t\t\t<column name=\"ATTRIBUTE_ID\" value=\"" +
-                        objectAttributes.get(i).getAttributeId() + "\"/>\n" +
-                        "\t\t</insert>\n");
-                objectAttributeWriter.flush();
+                String colomns = String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                        "OBJECT_TYPE_ID",objectAttributes.get(i).getObjectTypeId()) +
+                        String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                                "ATTRIBUTE_ID",objectAttributes.get(i).getAttributeId()).replace("\n", "");
+                String insert = String.format(FileReader.readFile(LIQUIBASE_INSERT),
+                        "OBJECT_TYPE_ATTRIBUTES", colomns);
+                FileWriter.appendFile(OBJECT_ATTRIBUTE_PATH, insert);
             } catch (IOException e) {
                 log.error(e.getMessage());
             }
         }
         try {
-            objectAttributeWriter.write("    </changeSet>\n" +
-                    "</databaseChangeLog>");
-            objectAttributeWriter.flush();
+            FileWriter.appendFile(OBJECT_ATTRIBUTE_PATH, FileReader.readFile(LIQUIBASE_BOTTOM));
         } catch (IOException e) {
             log.error(e.getMessage());
         }

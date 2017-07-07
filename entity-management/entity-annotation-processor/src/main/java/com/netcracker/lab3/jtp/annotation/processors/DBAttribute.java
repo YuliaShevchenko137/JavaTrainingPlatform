@@ -2,7 +2,7 @@ package com.netcracker.lab3.jtp.annotation.processors;
 
 import java.math.BigInteger;
 
-import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 public class DBAttribute {
     private BigInteger id;
@@ -41,16 +41,16 @@ public class DBAttribute {
 
         DBAttribute attribute = (DBAttribute) object;
 
-        if (!isNull(getName()) ? !getName().equals(attribute.getName()) : !isNull(attribute.getName())) return false;
-        return !isNull(getType()) ? getType().equals(attribute.getType()) : !isNull(attribute.getType());
+        if (nonNull(getName()) ? !getName().equals(attribute.getName()) : nonNull(attribute.getName())) return false;
+        return nonNull(getType()) ? getType().equals(attribute.getType()) : nonNull(attribute.getType());
 
     }
 
     @Override
     @SuppressWarnings("PMD.ConfusingTernary")
     public int hashCode() {
-        int result = !isNull(getName()) ? getName().hashCode() : 0;
-        result = 31 * result + (!isNull(getType()) ? getType().hashCode() : 0);
+        int result = nonNull(getName()) ? getName().hashCode() : 0;
+        result = 31 * result + (nonNull(getType()) ? getType().hashCode() : 0);
         return result;
     }
 }

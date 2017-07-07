@@ -1,0 +1,1 @@
+delete PARAMETERS where object_id = %1$s

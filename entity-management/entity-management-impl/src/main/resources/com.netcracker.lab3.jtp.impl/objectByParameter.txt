@@ -1,0 +1,4 @@
+select type.name, entity.object_id, entity.parent_id
+from dbobjects entity join object_types type on (entity.object_type_id = type.object_type_id)
+    join parameters params on (params.object_id = entity.object_id)
+where params.PARAMETER_ID = %1$s

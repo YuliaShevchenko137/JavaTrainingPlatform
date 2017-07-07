@@ -9,6 +9,7 @@
         <module>entity-management</module>
         <module>database</module>
         <module>web</module>
+        <module>file-system</module>
     </modules>
     <name>java-training-platform</name>
 

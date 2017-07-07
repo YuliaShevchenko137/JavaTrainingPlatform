@@ -105,21 +105,32 @@ public class EntityManagerImplTest extends DBTestCase{
         }
     }
 
-    public void testUpdate(){
+    public void testUpdate() {
         Course course = new Course();
         course.setName("Data Base");
         entityManager.insert(course);
-        course.setName("New database");
-        entityManager.update(course);
         try {
             IDataSet data = tester.getConnection().createDataSet(TESTED_TABLES);
             IDataSet expected = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
-                    .getResourceAsStream("DataSet/updateTest.xml"));
+                    .getResourceAsStream("DataSet/beforeUpdate.xml"));
             ReplacementDataSet replacedDataSet = new ReplacementDataSet(expected);
             replacedDataSet.addReplacementObject("[null]", null);
-
             ITable sortedExpected = new SortedTable(replacedDataSet.getTable(OBJECTS_TABLE), OBJECTS_EXPECTED_COLUMNS);
             ITable sortedActual = new SortedTable(data.getTable(OBJECTS_TABLE), OBJECTS_EXPECTED_COLUMNS);
+            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, IGNORE_OBJECTS);
+            sortedActual = new SortedTable(data.getTable(PARAMETERS_TABLE), PARAMETERS_EXPECTED_COLUMNS);
+            sortedExpected = new SortedTable(replacedDataSet.getTable(PARAMETERS_TABLE), PARAMETERS_EXPECTED_COLUMNS);
+            Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, IGNORE_PARAMETERS);
+
+            course.setName("New database");
+            entityManager.update(course);
+            data = tester.getConnection().createDataSet(TESTED_TABLES);
+            expected = new FlatXmlDataSetBuilder().build(Thread.currentThread().getContextClassLoader()
+                    .getResourceAsStream("DataSet/updateTest.xml"));
+            replacedDataSet = new ReplacementDataSet(expected);
+            replacedDataSet.addReplacementObject("[null]", null);
+            sortedExpected = new SortedTable(replacedDataSet.getTable(OBJECTS_TABLE), OBJECTS_EXPECTED_COLUMNS);
+            sortedActual = new SortedTable(data.getTable(OBJECTS_TABLE), OBJECTS_EXPECTED_COLUMNS);
             Assertion.assertEqualsIgnoreCols(sortedExpected, sortedActual, IGNORE_OBJECTS);
             sortedActual = new SortedTable(data.getTable(PARAMETERS_TABLE), PARAMETERS_EXPECTED_COLUMNS);
             sortedExpected = new SortedTable(replacedDataSet.getTable(PARAMETERS_TABLE), PARAMETERS_EXPECTED_COLUMNS);

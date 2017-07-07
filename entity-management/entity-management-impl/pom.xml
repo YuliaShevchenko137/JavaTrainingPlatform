@@ -22,6 +22,11 @@
             <artifactId>database</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.netcracker.lab3.javaplatform</groupId>
+            <artifactId>file-system</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <!--<build>-->
@@ -78,13 +83,17 @@
                         </executions>
                     </plugin>
                 </plugins>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                    </resource>
-                </resources>
             </build>
         </profile>
     </profiles>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
 
 </project>

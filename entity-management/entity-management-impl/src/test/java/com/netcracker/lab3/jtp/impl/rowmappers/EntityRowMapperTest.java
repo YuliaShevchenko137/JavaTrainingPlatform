@@ -1,10 +1,8 @@
-package com.netcracker.lab3.jtp.rowmappers;
+package com.netcracker.lab3.jtp.impl.rowmappers;
 
-
-import com.netcracker.lab3.jtp.ParametrImpl;
 import com.netcracker.lab3.jtp.db.SpringDataBase;
 import com.netcracker.lab3.jtp.entity.DBObject;
-import com.netcracker.lab3.jtp.impl.EntityManagerImpl;
+import com.netcracker.lab3.jtp.entity.Entity;
 import junit.framework.TestCase;
 import liquibase.Contexts;
 import liquibase.Liquibase;
@@ -17,19 +15,19 @@ import org.junit.Assert;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.math.BigInteger;
+
 @Slf4j
 @SuppressWarnings({"PMD.AvoidCatchingGenericException"})
-public class ParameterRowMapperTest extends TestCase {
-    private final EntityManagerImpl entityManager;
+public class EntityRowMapperTest extends TestCase{
     private final SpringDataBase springDataBase;
 
-    public ParameterRowMapperTest(){
+    public EntityRowMapperTest(){
         ApplicationContext context = new ClassPathXmlApplicationContext("Beans/EntityManagerBeans.xml");
         springDataBase = (SpringDataBase) context.getBean("testDataBase");
-        entityManager = new EntityManagerImpl(springDataBase);
         java.sql.Connection connection = null;
         try {
-            connection = entityManager.getConnection();
+            connection = springDataBase.getConnection();
             Liquibase liquibase = null;
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
             liquibase = new Liquibase("src\\main\\resources\\liquibase\\master.xml", new FileSystemResourceAccessor(), database);
@@ -41,25 +39,22 @@ public class ParameterRowMapperTest extends TestCase {
 
     @Override
     protected void setUp() {
-        entityManager.execute("delete parameters");
-        entityManager.execute("delete dbobjects");
+        springDataBase.execute("delete parameters");
+        springDataBase.execute("delete dbobjects");
     }
 
     public void testParameterRowMapper(){
-        String parameterName = "description";
-        String parameterValue = "test";
-        DBObject object = new DBObject();
-        object.setDescription(parameterValue);
-        entityManager.insert(object);
-        ParametrImpl expected = new ParametrImpl();
-        expected.setName(parameterName);
-        expected.setValue(parameterValue);
-        ParametrImpl actual = (ParametrImpl) springDataBase.executeObjectQuery("select attr.name, STRING_VALUE" +
-                " from attributes attr join PARAMETERS params " +
-                "on (attr.ATTRIBUTE_ID = params.ATTRIBUTE_ID) where params.object_id = " + object.getId() +
-                " and STRING_VALUE is not null",
-                new ParameterRowMapper());
-        Assert.assertEquals("parameter name equals", expected.getName(), actual.getName());
-        Assert.assertEquals("parameter value equals", expected.getValue(), actual.getValue());
+        Entity expected = new DBObject();
+        expected.setId(BigInteger.valueOf(10500));
+        springDataBase.execute("insert into dbobjects values(" + expected.getId() + ", " +
+                expected.getObjectTypeId() + ", " +
+                expected.getParentId() + ")");
+        Entity actual = (Entity) springDataBase.executeObjectQuery(
+                "select type.name, entity.object_id, entity.parent_id from dbobjects entity join object_types type " +
+                        "on (entity.object_type_id = type.object_type_id) where entity.object_id = " + expected.getId(),
+                new DBObjectRowMapper());
+        Assert.assertEquals("entity id values", expected.getId(), actual.getId());
+        Assert.assertEquals("entity object type values", expected.getObjectTypeId(), actual.getObjectTypeId());
+        Assert.assertEquals("entity parent id values", expected.getParentId(), actual.getParentId());
     }
 }
