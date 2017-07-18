@@ -85,6 +85,7 @@
                         <configuration>
                             <processors>
                                 <processor>com.netcracker.lab3.jtp.annotation.processors.EntityAnnotationProcessor</processor>
+                                <processor>com.netcracker.lab3.jtp.annotation.processors.EnumAnnotationProcessor</processor>
                             </processors>
                         </configuration>
                     </execution>

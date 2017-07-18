@@ -27,7 +27,7 @@
                 <version>${maven-jar-plugin.version}</version>
                 <configuration>
                     <excludes>
-                        <exclude>com.netcracker.lab3.jtp.annotation.processors.ParameterTypeAnnotationProcessor</exclude>
+                        <exclude>com.netcracker.lab3.jtp.annotation.processors.EnumAnnotationProcessor</exclude>
                     </excludes>
                 </configuration>
                 <inherited>true</inherited>
@@ -47,7 +47,7 @@
                         <!--<inherited>true</inherited>-->
                         <!--<configuration>-->
                             <!--<includes>-->
-                                <!--<include>com.netcracker.lab3.jtp.annotation.processors.ParameterTypeAnnotationProcessor</include>-->
+                                <!--<include>com.netcracker.lab3.jtp.annotation.processors.EnumAnnotationProcessor>-->
                             <!--</includes>-->
                         <!--</configuration>-->
                     <!--</execution>-->
@@ -60,7 +60,7 @@
                         <!--<inherited>false</inherited>-->
                         <!--<configuration>-->
                             <!--<excludes>-->
-                                <!--<exclude>com.netcracker.lab3.jtp.annotation.processors.ParameterTypeAnnotationProcessor</exclude>-->
+                                <!--<exclude>com.netcracker.lab3.jtp.annotation.processors.EnumAnnotationProcessor>-->
                             <!--</excludes>-->
                         <!--</configuration>-->
                     <!--</execution>-->

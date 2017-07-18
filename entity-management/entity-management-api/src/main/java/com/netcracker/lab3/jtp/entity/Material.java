@@ -12,8 +12,8 @@ import lombok.*;
 @EqualsAndHashCode
 @DBObjectType(id = 15)
 public class Material extends DBObject {
-    @Attribute(AttributeType.String)
-    private String type;
+    @Attribute(AttributeType.Object)
+    private Enums type;
     @Attribute(AttributeType.Data)
     private String data;
 }

@@ -13,7 +13,7 @@ import lombok.*;
 @DBObjectType(id = 21)
 public class Test extends Question {
     @Attribute(AttributeType.Object)
-    private TestType type;
+    private Enums type;
     @Attribute(AttributeType.String)
     private String content;
 }

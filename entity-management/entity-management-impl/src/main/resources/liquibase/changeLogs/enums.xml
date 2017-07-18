@@ -1,0 +1,68 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.3.xsd">
+
+    <property name="author" value="javal3"/>
+    <changeSet author="${author}" id="insert enum objects">
+        <validCheckSum>ANY</validCheckSum>
+		<insert tableName="DBOBJECTS">
+            <column name="OBJECT_ID" value="123456150036902082930"/>
+            <column name="PARENT_ID" value="null"/>
+            <column name="OBJECT_TYPE_ID" value="22"/>
+		</insert>
+
+		<insert tableName="PARAMETERS">
+            <column name="PARAMETER_ID" value="123456150036902082931"/>
+            <column name="object_id" value="123456150036902082930"/>
+            <column name="attribute_id" valueComputed="(select attribute_id from attributes where name = 'name' and type_name = 'String')"/>
+            <column name="String_value" value="TestType"/>
+		</insert>
+
+		<insert tableName="DBOBJECTS">
+            <column name="PARAMETER_ID" value="123456150036902083032"/>
+            <column name="object_id" value="123456150036902082930"/>
+            <column name="attribute_id" valueComputed="(select attribute_id from attributes where name = 'enumName' and type_name = 'String')"/>
+            <column name="String_value" value="oneAnswer"/>
+		</insert>
+		<insert tableName="DBOBJECTS">
+            <column name="OBJECT_ID" value="123456150036902083033"/>
+            <column name="PARENT_ID" value="null"/>
+            <column name="OBJECT_TYPE_ID" value="22"/>
+		</insert>
+
+		<insert tableName="PARAMETERS">
+            <column name="PARAMETER_ID" value="123456150036902083034"/>
+            <column name="object_id" value="123456150036902083033"/>
+            <column name="attribute_id" valueComputed="(select attribute_id from attributes where name = 'name' and type_name = 'String')"/>
+            <column name="String_value" value="TestType"/>
+		</insert>
+
+		<insert tableName="DBOBJECTS">
+            <column name="PARAMETER_ID" value="123456150036902083035"/>
+            <column name="object_id" value="123456150036902083033"/>
+            <column name="attribute_id" valueComputed="(select attribute_id from attributes where name = 'enumName' and type_name = 'String')"/>
+            <column name="String_value" value="multiAnswer"/>
+		</insert>
+		<insert tableName="DBOBJECTS">
+            <column name="OBJECT_ID" value="123456150036902083136"/>
+            <column name="PARENT_ID" value="null"/>
+            <column name="OBJECT_TYPE_ID" value="22"/>
+		</insert>
+
+		<insert tableName="PARAMETERS">
+            <column name="PARAMETER_ID" value="123456150036902083137"/>
+            <column name="object_id" value="123456150036902083136"/>
+            <column name="attribute_id" valueComputed="(select attribute_id from attributes where name = 'name' and type_name = 'String')"/>
+            <column name="String_value" value="TestType"/>
+		</insert>
+
+		<insert tableName="DBOBJECTS">
+            <column name="PARAMETER_ID" value="123456150036902083138"/>
+            <column name="object_id" value="123456150036902083136"/>
+            <column name="attribute_id" valueComputed="(select attribute_id from attributes where name = 'enumName' and type_name = 'String')"/>
+            <column name="String_value" value="code"/>
+		</insert>
+	</changeSet>
+</databaseChangeLog>

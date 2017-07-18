@@ -1,1 +1,2 @@
 com.netcracker.lab3.jtp.annotation.processors.EntityAnnotationProcessor
+com.netcracker.lab3.jtp.annotation.processors.EnumAnnotationProcessor

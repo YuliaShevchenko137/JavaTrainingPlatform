@@ -2,12 +2,13 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.3.xsd">
 
     <include file="changeLogs\initializeDB.xml" relativeToChangelogFile="true"/>
     <include file="changeLogs\parameterTypes.xml" relativeToChangelogFile="true"/>
     <include file="changeLogs\objectTypes.xml" relativeToChangelogFile="true"/>
     <include file="changeLogs\attributes.xml" relativeToChangelogFile="true"/>
     <include file="changeLogs\objectTypeAttributes.xml" relativeToChangelogFile="true"/>
+    <include file="changeLogs\enums.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

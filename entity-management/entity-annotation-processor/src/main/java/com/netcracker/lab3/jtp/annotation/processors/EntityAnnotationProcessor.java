@@ -37,6 +37,9 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
     private final static String ATTRIBUTES_PATH = "entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/attributes.xml";
     private final static String OBJECT_ATTRIBUTE_PATH = "entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/objectTypeAttributes.xml";
 
+    private String insert;
+    private String column;
+    private String liquibaseBottom;
 
     private final Set<DBAttribute> attributes = new HashSet<>();
     private final List<ObjectTypeAttribute> objectAttributes = new ArrayList<>();
@@ -45,14 +48,18 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
 
     public void initializeWriters(){
         try {
+            insert = FileReader.readFile(LIQUIBASE_INSERT);
+            column = FileReader.readFile(LIQUIBASE_COLOMN);
+            liquibaseBottom = FileReader.readFile(LIQUIBASE_BOTTOM);
+            String liquibaseTop = FileReader.readFile(LIQUIBASE_TOP);
             FileWriter.writeFile(OBJECT_TYPES_PATH,
-                    String.format(FileReader.readFile(LIQUIBASE_TOP), "insert into OBJECT_TYPES"));
+                    String.format(liquibaseTop, "insert into OBJECT_TYPES"));
 
             FileWriter.writeFile(ATTRIBUTES_PATH,
-                    String.format(FileReader.readFile(LIQUIBASE_TOP), "insert into ATTRIBUTES"));
+                    String.format(liquibaseTop, "insert into ATTRIBUTES"));
 
             FileWriter.writeFile(OBJECT_ATTRIBUTE_PATH,
-                    String.format(FileReader.readFile(LIQUIBASE_TOP), "insert into OBJECT_TYPE_ATTRIBUTES"));
+                    String.format(liquibaseTop, "insert into OBJECT_TYPE_ATTRIBUTES"));
         } catch (IOException e) {
             log.error(e.getMessage());
         }
@@ -68,7 +75,7 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
                     dealElements(roundEnv.getElementsAnnotatedWith(annotation));
                 }
                 try {
-                    FileWriter.appendFile(OBJECT_TYPES_PATH, FileReader.readFile(LIQUIBASE_BOTTOM));
+                    FileWriter.appendFile(OBJECT_TYPES_PATH, liquibaseBottom);
                 } catch (IOException e) {
                     log.error(e.getMessage());
                 }
@@ -100,15 +107,15 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
 
     public void objectTypesGenerate(DBObject object) {
         try {
-            String colomns = String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+            String columns = String.format(column,
                     "OBJECT_TYPE_ID",object.getId()) +
-                    String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                    String.format(column,
                             "NAME",object.getName()) +
-                    String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                    String.format(column,
                             "PARENT_ID",object.getParentId()).replace("\n", "");
-            String insert = String.format(FileReader.readFile(LIQUIBASE_INSERT),
-                    "OBJECT_TYPES", colomns);
-            FileWriter.appendFile(OBJECT_TYPES_PATH, insert);
+            String insertType = String.format(insert,
+                    "OBJECT_TYPES", columns);
+            FileWriter.appendFile(OBJECT_TYPES_PATH, insertType);
         } catch (IOException ex) {
             log.error(ex.getMessage());
         }
@@ -137,21 +144,21 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
     public void attributesGenerate() {
         for (DBAttribute attribute : attributes) {
             try {
-                String colomns = String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                String columns = String.format(column,
                         "ATTRIBUTE_ID",attribute.getId()) +
-                        String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                        String.format(column,
                                 "NAME",attribute.getName()) +
-                        String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                        String.format(column,
                                 "TYPE_NAME",attribute.getType()).replace("\n", "");
-                String insert = String.format(FileReader.readFile(LIQUIBASE_INSERT),
-                        "ATTRIBUTES", colomns);
-                FileWriter.appendFile(ATTRIBUTES_PATH, insert);
+                String insertAttribute = String.format(insert,
+                        "ATTRIBUTES", columns);
+                FileWriter.appendFile(ATTRIBUTES_PATH, insertAttribute);
             } catch (IOException e) {
                 log.error(e.getMessage());
             }
         }
         try {
-            FileWriter.appendFile(ATTRIBUTES_PATH, FileReader.readFile(LIQUIBASE_BOTTOM));
+            FileWriter.appendFile(ATTRIBUTES_PATH, liquibaseBottom);
         } catch (IOException e) {
             log.error(e.getMessage());
         }
@@ -160,19 +167,19 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
     public void objectAttributeGenerate() {
         for (int i = 0; i < objectAttributes.size(); i++) {
             try {
-                String colomns = String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                String columns = String.format(column,
                         "OBJECT_TYPE_ID",objectAttributes.get(i).getObjectTypeId()) +
-                        String.format(FileReader.readFile(LIQUIBASE_COLOMN),
+                        String.format(column,
                                 "ATTRIBUTE_ID",objectAttributes.get(i).getAttributeId()).replace("\n", "");
-                String insert = String.format(FileReader.readFile(LIQUIBASE_INSERT),
-                        "OBJECT_TYPE_ATTRIBUTES", colomns);
-                FileWriter.appendFile(OBJECT_ATTRIBUTE_PATH, insert);
+                String insertOA = String.format(insert,
+                        "OBJECT_TYPE_ATTRIBUTES", columns);
+                FileWriter.appendFile(OBJECT_ATTRIBUTE_PATH, insertOA);
             } catch (IOException e) {
                 log.error(e.getMessage());
             }
         }
         try {
-            FileWriter.appendFile(OBJECT_ATTRIBUTE_PATH, FileReader.readFile(LIQUIBASE_BOTTOM));
+            FileWriter.appendFile(OBJECT_ATTRIBUTE_PATH, liquibaseBottom);
         } catch (IOException e) {
             log.error(e.getMessage());
         }

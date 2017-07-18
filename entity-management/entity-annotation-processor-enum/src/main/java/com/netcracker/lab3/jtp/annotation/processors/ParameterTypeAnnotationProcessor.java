@@ -11,11 +11,10 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import java.io.IOException;
+
 import com.netcracker.lab3.jtp.file.*;
-import java.util.List;
 import java.util.Set;
 
-import com.netcracker.lab3.jtp.annotation.DBParameterType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,15 +22,20 @@ import org.slf4j.LoggerFactory;
 @AutoService(Processor.class)
 public class ParameterTypeAnnotationProcessor extends AbstractProcessor {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-    private final static String PATH = "entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/parameterTypes.xml";
+    private final static String PATH_PARAMETER_TYPE = "entity-management/entity-management-impl/src/main/resources/liquibase/changeLogs/parameterTypes.xml";
     public final static String LIQUIBASE_TOP = "entity-management/entity-management-impl/src/main/resources/liquibase/changeLogParts/changeLogBegin.txt";
     public final static String LIQUIBASE_BOTTOM = "entity-management/entity-management-impl/src/main/resources/liquibase/changeLogParts/changeLogEnd.txt";
     public final static String LIQUIBASE_INSERT = "entity-management/entity-management-impl/src/main/resources/liquibase/changeLogParts/changeLogInsert.txt";
     public final static String LIQUIBASE_COLOMN = "entity-management/entity-management-impl/src/main/resources/liquibase/changeLogParts/changeLogColomn.txt";
 
+    private String insert;
+    private String column;
+
     public void initializeWriters() {
         try {
-            FileWriter.writeFile(PATH, String.format(FileReader.readFile(LIQUIBASE_TOP), "insert into ATTRIBUTE_TYPES"));
+            insert = FileReader.readFile(LIQUIBASE_INSERT);
+            column = FileReader.readFile(LIQUIBASE_COLOMN);
+            FileWriter.writeFile(PATH_PARAMETER_TYPE, String.format(FileReader.readFile(LIQUIBASE_TOP), "insert into ATTRIBUTE_TYPES"));
         } catch (IOException e) {
             log.error(e.getMessage());
         }
@@ -42,16 +46,11 @@ public class ParameterTypeAnnotationProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         if(!annotations.isEmpty()) {
             initializeWriters();
-            for (TypeElement annotation : annotations) { // log , isnotnull
-                if (annotation.getSimpleName().contentEquals(DBParameterType.class.getSimpleName())) {
-                    for (Element element : roundEnv.getElementsAnnotatedWith(annotation)) {
-                        TypeElement anClass = (TypeElement) element;
-                        dealElements(anClass.getEnclosedElements());
-                    }
-                }
+            for (TypeElement annotation : annotations) {
+                dealEnum(roundEnv.getElementsAnnotatedWith(annotation));
             }
             try {
-                FileWriter.appendFile(PATH, FileReader.readFile(LIQUIBASE_BOTTOM));
+                FileWriter.appendFile(PATH_PARAMETER_TYPE, FileReader.readFile(LIQUIBASE_BOTTOM));
             } catch (IOException e) {
                 log.error(e.getMessage());
             }
@@ -59,20 +58,26 @@ public class ParameterTypeAnnotationProcessor extends AbstractProcessor {
         return true;
     }
 
-    public void dealElements(List<? extends Element> elements){
-        for (Element element: elements) {
-            if (element.getKind().equals(ElementKind.ENUM_CONSTANT)) {
-                try {
-                    String colomn = String.format(FileReader.readFile(LIQUIBASE_COLOMN),
-                            "TYPE_NAME",element.getSimpleName()).replace("\n", "");
-                    String insert = String.format(FileReader.readFile(LIQUIBASE_INSERT),
-                            "ATTRIBUTE_TYPES", colomn);
-                    FileWriter.appendFile(PATH, insert);
-                } catch (IOException ex) {
-                    log.error(ex.getMessage());
+    public void dealEnum(Set<? extends Element> elements) {
+        for (Element element : elements) {
+            for (Element enumElement : ((TypeElement) element).getEnclosedElements()) {
+                if (enumElement.getKind().equals(ElementKind.ENUM_CONSTANT)) {
+                    try {
+                        writeParameterType(enumElement);
+                    } catch (IOException ex) {
+                        log.error(ex.getMessage());
+                    }
                 }
             }
         }
+    }
+
+    public void writeParameterType(Element enumElement) throws IOException{
+        String columns = String.format(column,
+                "TYPE_NAME", enumElement.getSimpleName()).replace("\n", "");
+        String insertParameterType = String.format(insert,
+                "ATTRIBUTE_TYPES", columns);
+        FileWriter.appendFile(PATH_PARAMETER_TYPE, insertParameterType);
     }
 
     @Override
