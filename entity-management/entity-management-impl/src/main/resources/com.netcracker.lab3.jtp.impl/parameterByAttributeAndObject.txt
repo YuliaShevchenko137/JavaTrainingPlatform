@@ -1,4 +1,4 @@
 select attr.name, COALESCE(to_char(INTEGER_VALUE), to_char(DECIMAL_VALUE), STRING_VALUE, to_char(XML_VALUE),
             to_char(DATE_VALUE, 'yyyy mm dd hh24 mm ss'), to_char(LIST_VALUE), to_char(OBJECT_VALUE))
 from attributes attr join PARAMETERS params on (attr.attribute_id = params.attribute_id)
-where params.PARAMETER_ID = %1$s
+where params.OBJECT_ID = %1$s AND params.ATTRIBUTE_ID = %2$s

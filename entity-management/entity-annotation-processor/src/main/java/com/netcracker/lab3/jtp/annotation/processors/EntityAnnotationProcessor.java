@@ -108,7 +108,7 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
     public void objectTypesGenerate(DBObject object) {
         try {
             String columns = String.format(column,
-                    "OBJECT_TYPE_ID",object.getId()) +
+                    "OBJECT_TYPE_ID",object.getTypeId()) +
                     String.format(column,
                             "NAME",object.getName()) +
                     String.format(column,
@@ -123,11 +123,11 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
     }
 
     public void objectOrder(DBObject object){
-        List<? extends Element> list = object.getAnClass().getEnclosedElements();
+        List<? extends Element> list = object.getAnnotatedClass().getEnclosedElements();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getAnnotation(Attribute.class) != null) {
                 DBAttribute attribute = new DBAttribute();
-                attribute.setId(KeyGenerator.generate());
+                attribute.setAttributeId(KeyGenerator.generate());
                 attribute.setName(list.get(i).getSimpleName().toString());
                 Attribute attrType = list.get(i).getAnnotation(Attribute.class);
                 attribute.setType(attrType.value().name());
@@ -145,7 +145,7 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
         for (DBAttribute attribute : attributes) {
             try {
                 String columns = String.format(column,
-                        "ATTRIBUTE_ID",attribute.getId()) +
+                        "ATTRIBUTE_ID",attribute.getAttributeId()) +
                         String.format(column,
                                 "NAME",attribute.getName()) +
                         String.format(column,
@@ -188,15 +188,15 @@ public class EntityAnnotationProcessor extends AbstractProcessor {
     public BigInteger getAttributeId(Set<DBAttribute> attributes, DBAttribute attribute) {
         for (DBAttribute attr : attributes) {
             if (attr.equals(attribute)) {
-                return attr.getId();
+                return attr.getAttributeId();
             }
         }
-        return attribute.getId();
+        return attribute.getAttributeId();
     }
 
     public boolean containId(List<DBObject> list, DBObject object) {
         for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getId().equals(object.getParentId())) {
+            if(list.get(i).getTypeId().equals(object.getParentId())) {
                 return true;
             }
         }

@@ -1,6 +1,7 @@
 package com.netcracker.lab3.jtp.db;
 
 
+import liquibase.Contexts;
 import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
@@ -17,6 +18,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -58,12 +60,22 @@ public class SpringDataBase implements DAO{
         jdbcTemplateObject.execute(request);
     }
 
+    public PreparedStatement getPreparedStatement(String request){
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = dataSource.getConnection().prepareStatement(request);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;
+    }
+
     @Override
     public void executeLiquibase(String path) {
         try {
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(dataSource.getConnection()));
             Liquibase liquibase = new Liquibase(path, new ClassLoaderResourceAccessor(), database);
-            liquibase.update("v 1.0");
+            liquibase.update(new Contexts());
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (DatabaseException e) {

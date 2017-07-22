@@ -110,11 +110,6 @@
             <artifactId>dbunit</artifactId>
             <version>${dbunit.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.springframework</groupId>-->
-            <!--<artifactId>spring-jdbc</artifactId>-->
-            <!--<version>${springjdbc.version}</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.github.noraui</groupId>
             <artifactId>ojdbc7</artifactId>

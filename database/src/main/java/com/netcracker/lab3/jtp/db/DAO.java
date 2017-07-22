@@ -3,6 +3,7 @@ package com.netcracker.lab3.jtp.db;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 public interface DAO {
@@ -15,6 +16,8 @@ public interface DAO {
     Object executeObjectQuery(String request, RowMapper rowMapper);
 
     List executeListQuery(String request, RowMapper rowMapper);
+
+    PreparedStatement getPreparedStatement(String request);
 
     void close();
 

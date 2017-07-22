@@ -1,0 +1,1 @@
+insert into parameters(PARAMETER_ID, object_id, attribute_id, data_value) values(%1$s, %2$s, %3$s, ?)

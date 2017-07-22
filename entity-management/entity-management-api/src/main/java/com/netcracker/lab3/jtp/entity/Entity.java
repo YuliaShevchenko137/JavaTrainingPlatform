@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.util.List;
 
+@SuppressWarnings({"PMD.ShortVariable"})
 public interface Entity {
     void setValue(String fieldName, Object value);
 

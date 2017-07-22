@@ -14,10 +14,10 @@ public class DBObjectRowMapper implements RowMapper {
     public Entity mapRow(ResultSet resultSet, int rowNum) throws SQLException {
         Entity entity = null;
         try {
-            entity = (Entity) Class.forName("com.netcracker.lab3.jtp.entity." + resultSet.getString(1)).newInstance();
-            entity.setId(new BigInteger(resultSet.getString(2)));
+            entity = (Entity) Class.forName("com.netcracker.lab3.jtp.entity." + resultSet.getString(1)).newInstance(); // name of class
+            entity.setId(new BigInteger(resultSet.getString(2))); //id
             if(nonNull(resultSet.getString(3))) {
-                entity.setParentId(new BigInteger(resultSet.getString(3)));
+                entity.setParentId(new BigInteger(resultSet.getString(3))); // if parent exist add parent
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

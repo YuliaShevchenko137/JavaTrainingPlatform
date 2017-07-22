@@ -11,26 +11,27 @@ import java.math.BigInteger;
 
 import static java.util.Objects.isNull;
 
+
 public class DBObject {
-    final private BigInteger id;
+    final private BigInteger typeId;
     final private String name;
     final private BigInteger parentId;
-    final private TypeElement anClass;
+    final private TypeElement annotatedClass;
     final private DBObjectType objectType;
 
     public DBObject(Element element) {
-        anClass = (TypeElement) element;
+        annotatedClass = (TypeElement) element;
         objectType = element.getAnnotation(DBObjectType.class);
-        DeclaredType declared = (DeclaredType) anClass.getSuperclass();
+        DeclaredType declared = (DeclaredType) annotatedClass.getSuperclass();
         Element supertypeElement = declared.asElement();
         DBObjectType parent = supertypeElement.getAnnotation(DBObjectType.class);
-        id = BigInteger.valueOf(objectType.id());
+        typeId = BigInteger.valueOf(objectType.id());
         name = element.getSimpleName().toString();
         parentId = isNull(parent) ? null : BigInteger.valueOf(parent.id());
     }
 
-    public BigInteger getId() {
-        return id;
+    public BigInteger getTypeId() {
+        return typeId;
     }
 
     public String getName() {
@@ -41,8 +42,8 @@ public class DBObject {
         return parentId;
     }
 
-    public TypeElement getAnClass() {
-        return anClass;
+    public TypeElement getAnnotatedClass() {
+        return annotatedClass;
     }
 
     public DBObjectType getObjectType() {

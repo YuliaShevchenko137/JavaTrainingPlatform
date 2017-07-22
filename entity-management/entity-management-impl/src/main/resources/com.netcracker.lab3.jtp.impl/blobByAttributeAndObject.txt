@@ -1,0 +1,3 @@
+select attr.name, data_value
+from attributes attr join PARAMETERS params on (attr.attribute_id = params.attribute_id)
+where params.OBJECT_ID = %1$s AND params.ATTRIBUTE_ID = %2$s

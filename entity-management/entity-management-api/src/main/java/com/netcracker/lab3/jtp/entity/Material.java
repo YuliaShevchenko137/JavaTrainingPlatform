@@ -5,6 +5,8 @@ import com.netcracker.lab3.jtp.enums.AttributeType;
 import com.netcracker.lab3.jtp.annotation.DBObjectType;
 import lombok.*;
 
+import java.io.InputStream;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -15,5 +17,11 @@ public class Material extends DBObject {
     @Attribute(AttributeType.Object)
     private Enums type;
     @Attribute(AttributeType.Data)
-    private String data;
+    private InputStream data;
+
+    @Override
+    protected void finalize() throws Throwable {
+        data.close();
+        super.finalize();
+    }
 }

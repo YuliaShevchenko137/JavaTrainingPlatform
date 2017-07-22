@@ -20,15 +20,11 @@ import static java.util.Objects.isNull;
 @Slf4j
 @SuppressWarnings("PMD.CyclomaticComplexity")
 public class DataConverter {
-    public Object dataConvert(Field field, String value){
-        if (field.getAnnotation(Attribute.class).value().equals(AttributeType.Object)) {
-            ApplicationContext context = new ClassPathXmlApplicationContext("Beans/EntityManagerBeans.xml");
-            EntityManagerImpl entityManager = (EntityManagerImpl)context.getBean("EntityManager");
-            return entityManager.getObjectById(new BigInteger(value));
-        } else if (field.getAnnotation(Attribute.class).value().equals(AttributeType.Parameter)) {
-            ApplicationContext context = new ClassPathXmlApplicationContext("Beans/EntityManagerBeans.xml");
-            EntityManagerImpl entityManager = (EntityManagerImpl)context.getBean("EntityManager");
-            return entityManager.getParameterById(new BigInteger(value));
+    public static Object dataConvert(Field field, String value){
+        if (AttributeType.Object.equals(field.getAnnotation(Attribute.class).value())) {
+            return getEntityManager().getObjectById(new BigInteger(value));
+        } else if (AttributeType.Parameter.equals(field.getAnnotation(Attribute.class).value())) {
+            return getEntityManager().getParameterReference(value);
         } else if(field.getType().equals(String.class)) {
             return value;
         } else if(field.getType().equals(BigDecimal.class)) {
@@ -41,7 +37,12 @@ public class DataConverter {
         return value;
     }
 
-    public Object dataConvert(Class fieldClass, String value){
+    public static EntityManagerImpl getEntityManager(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("Beans/EntityManagerBeans.xml");
+        return  (EntityManagerImpl)context.getBean("EntityManager");
+    }
+
+    public static Object dataConvert(Class fieldClass, String value){
         if(fieldClass.equals(String.class)) {
             return value;
         } else if(fieldClass.equals(BigDecimal.class)) {
@@ -54,7 +55,7 @@ public class DataConverter {
         return value;
     }
 
-    public Calendar calendarFromData(String data){
+    public static Calendar calendarFromData(String data){
         String[] strings = data.split(" ");
         Calendar calendar = Calendar.getInstance();
         calendar.set(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]), Integer.parseInt(strings[2]),
@@ -63,32 +64,32 @@ public class DataConverter {
         return calendar;
     }
 
-    public String calendarToData(Calendar calendar){
+    public static String calendarToData(Calendar calendar){
         return "to_date('" + calendar.get(Calendar.YEAR) + " " + calendar.get(Calendar.MONTH) + " " +
                 calendar.get(Calendar.DAY_OF_MONTH) + " " + calendar.get(Calendar.HOUR_OF_DAY) + " " +
                 calendar.get(Calendar.MINUTE)  + " " + calendar.get(Calendar.SECOND)  +
                 "','yyyy mm dd hh24 mi ss')";
     }
 
-    public String convertToData(Entity entity, Field field) {
+
+
+    public static String convertToData(Entity entity, Field field) {
+        field.setAccessible(true);
         try {
-            field.setAccessible(true);
             if(isNull(field.get(entity))) {
-                return null;
+                return "null";
             }
             if (field.getAnnotation(Attribute.class).value().equals(AttributeType.Date)) {
                 Calendar calendar = (Calendar) field.get(entity);
                 return calendarToData(calendar);
-            } else if (field.getAnnotation(Attribute.class).value().equals(AttributeType.Data)) {
-                return null;                        ///////////////!!!!!!!!!!!!!!!
-            } else if ( field.getAnnotation(Attribute.class).value().equals(AttributeType.String) ||
+            }  else if ( field.getAnnotation(Attribute.class).value().equals(AttributeType.String) ||
                     field.getAnnotation(Attribute.class).value().equals(AttributeType.XML)) {
                 return "'" + field.get(entity).toString() + "'";
             }
             else if (field.getAnnotation(Attribute.class).value().equals(AttributeType.Object)) {
                 return ((Entity) field.get(entity)).getId().toString();
             } else if (field.getAnnotation(Attribute.class).value().equals(AttributeType.Parameter)) {
-                return ((ParameterReference) field.get(entity)).getId().toString();
+                return ((ParametrReference) field.get(entity)).getObjectId().toString();
             }
         } catch (IllegalAccessException e) {
             log.error(e.getMessage());
@@ -102,7 +103,7 @@ public class DataConverter {
         return data;
     }
 
-    public String convertToData(Object fieldValue) {
+    public static String convertToData(Object fieldValue) {
         if (fieldValue.getClass().equals(Calendar.class)) {
             return calendarToData((Calendar) fieldValue);
         } else if (fieldValue.getClass().equals(String.class)) {
@@ -112,10 +113,33 @@ public class DataConverter {
             return fieldValue.toString();
         } else if (fieldValue.getClass().equals(Entity.class)) {
             return ((Entity) fieldValue).getId().toString();
-        } else if (fieldValue.getClass().equals(ParameterReferencesImpl.class)) {
-            return ((ParameterReference) fieldValue).getId().toString();
+        } else if (fieldValue.getClass().equals(ParametrReferencesImpl.class)) {
+            return ((ParametrReference) fieldValue).getObjectId().toString();
         }
         return fieldValue.toString();
     }
-
+//
+//    public static String convertToData(String fieldValue) {
+//        return "'" + fieldValue + "'";
+//    }
+//
+//    public static String convertToData(Calendar fieldValue) {
+//        return calendarToData((Calendar) fieldValue);
+//    }
+//
+//    public static String convertToData(ParametrReferencesImpl fieldValue) {
+//        return ((ParametrReference) fieldValue).getObjectId().toString();
+//    }
+//
+//    public static String convertToData(Entity fieldValue) {
+//        return ((Entity) fieldValue).getId().toString();
+//    }
+//
+//    public static String convertToData(BigDecimal fieldValue) {
+//        return fieldValue.toString();
+//    }
+//
+//    public static String convertToData(BigInteger fieldValue) {
+//        return fieldValue.toString();
+//    }
 }

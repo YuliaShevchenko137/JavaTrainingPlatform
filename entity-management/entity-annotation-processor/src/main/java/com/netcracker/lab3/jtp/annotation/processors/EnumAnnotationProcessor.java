@@ -125,10 +125,10 @@ public class EnumAnnotationProcessor extends AbstractProcessor {
     }
 
     public void writeEnumObject(Element enumElement, Element classElement) throws IOException{
-        BigInteger id =  KeyGenerator.generate();
+        BigInteger objectId = KeyGenerator.generate();
         String columns =
                 String.format(column,
-                        "OBJECT_ID", id) +
+                        "OBJECT_ID", objectId) +
                 String.format(column,
                         "PARENT_ID", "null") +
                 String.format(column,
@@ -137,7 +137,7 @@ public class EnumAnnotationProcessor extends AbstractProcessor {
         String enumName = String.format(column,
                 "PARAMETER_ID", KeyGenerator.generate()) +
                 String.format(column,
-                        "object_id", id) +
+                        "object_id", objectId) +
                 String.format(columnSql,
                         "attribute_id",
                         String.format(sqlAttributes, nameField, AttributeType.String.name()).replace("\n", "") ) +
@@ -147,7 +147,7 @@ public class EnumAnnotationProcessor extends AbstractProcessor {
         String enumClass = String.format(column,
                 "PARAMETER_ID", KeyGenerator.generate()) +
                 String.format(column,
-                        "object_id", id) +
+                        "object_id", objectId) +
                 String.format(columnSql,
                         "attribute_id",
                         String.format(sqlAttributes, enumNameField, AttributeType.String.name()).replace("\n", "") ) +

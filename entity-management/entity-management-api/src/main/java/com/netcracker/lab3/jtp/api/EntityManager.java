@@ -7,11 +7,12 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.List;
 
+@SuppressWarnings({"PMD.ShortVariable"})
 public interface EntityManager {
 
     Entity getObjectById(BigInteger id);
 
-    List<Entity> getObjectsByType(BigInteger id);
+    List<Entity> getObjectsByType(BigInteger typeId);
 
     List<Entity> getObjectsByType(Class entityClass);
 

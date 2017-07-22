@@ -10,6 +10,7 @@ import java.util.List;
 
 @DBObjectType(id = 10)
 @EqualsAndHashCode
+@SuppressWarnings({"PMD.ShortVariable"})
 public class EntityImpl implements Entity {
 
     private BigInteger id;

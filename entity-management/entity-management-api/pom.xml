@@ -37,40 +37,6 @@
                 </configuration>
                 <inherited>true</inherited>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-compiler-plugin</artifactId>-->
-                <!--<version>${maven-compiler-plugin.version}</version>-->
-                <!--<configuration>-->
-                    <!--<source>${java.version}</source>-->
-                    <!--<target>${java.version}</target>-->
-                <!--</configuration>-->
-                <!--<inherited>true</inherited>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>default-compile</id>-->
-                        <!--<inherited>true</inherited>-->
-                        <!--<configuration>-->
-                            <!--<includes>-->
-                                <!--<include>com.netcracker.lab3.jtp.annotation.processors.EntityAnnotationProcessor</include>-->
-                            <!--</includes>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>after-processing</id>-->
-                        <!--<phase>process-classes</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>compile</goal>-->
-                        <!--</goals>-->
-                        <!--<inherited>false</inherited>-->
-                        <!--<configuration>-->
-                            <!--<excludes>-->
-                                <!--<exclude>com.netcracker.lab3.jtp.annotation.processors.EntityAnnotationProcessor</exclude>-->
-                            <!--</excludes>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>

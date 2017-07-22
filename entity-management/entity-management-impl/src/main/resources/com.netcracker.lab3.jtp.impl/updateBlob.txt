@@ -1,0 +1,3 @@
+update parameters set data_value = ? where attribute_id = (select attribute_id
+from attributes
+where name = '%1$s' and type_name = '%2$s') and object_id = %3$s

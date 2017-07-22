@@ -5,16 +5,16 @@ import java.math.BigInteger;
 import static java.util.Objects.nonNull;
 
 public class DBAttribute {
-    private BigInteger id;
+    private BigInteger attributeId;
     private String name;
     private String type;
 
-    public BigInteger getId() {
-        return id;
+    public BigInteger getAttributeId() {
+        return attributeId;
     }
 
-    public void setId(BigInteger id) {
-        this.id = id;
+    public void setAttributeId(BigInteger attributeId) {
+        this.attributeId = attributeId;
     }
 
     public String getName() {

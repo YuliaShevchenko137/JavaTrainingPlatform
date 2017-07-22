@@ -82,10 +82,10 @@
             <column name="STRING_VALUE" type="varchar(1000)"/>
             <column name="XML_VALUE" type="varchar(1000)"/>
             <column name="DATE_VALUE" type="date"/>
-            <column name="LIST_VALUE" type="number(38)"/>
-            <column name="PARAMETER_VALUE" type="number(38)"/>
+            <column name="LIST_VALUE" type="varchar(1000)"/>
+            <column name="PARAMETER_VALUE" type="varchar(100)"/>
             <column name="OBJECT_VALUE" type="number(38)"/>
-            <column name="DATA_VALUE" type="varchar(300)"/>
+            <column name="DATA_VALUE" type="blob"/>
         </createTable>
         <addNotNullConstraint columnDataType="number(38)" columnName="OBJECT_ID" tableName="PARAMETERS"/>
         <addNotNullConstraint columnDataType="number(38)" columnName="ATTRIBUTE_ID" tableName="PARAMETERS"/>
@@ -106,13 +106,13 @@
         <addNotNullConstraint columnDataType="varchar(40)" columnName="TYPE_NAME" tableName="ATTRIBUTE_TYPES"/>
         <addPrimaryKey columnNames="TYPE_NAME" tableName="ATTRIBUTE_TYPES"/>
 
-        <createTable tableName="LIST_TYPE">
-            <column name="LIST_ID" type="number(38)"/>
-            <column name="VALUE" type="varchar(40)"/>
-            <column name="ATTRIBUTE_ID" type="number(38)"/>
-        </createTable>
-        <addNotNullConstraint columnDataType="number(38)" columnName="LIST_ID" tableName="LIST_TYPE"/>
-        <addPrimaryKey columnNames="LIST_ID" tableName="LIST_TYPE"/>
+        <!--<createTable tableName="LIST_TYPE">-->
+            <!--<column name="LIST_ID" type="number(38)"/>-->
+            <!--<column name="VALUE" type="varchar(40)"/>-->
+            <!--<column name="ATTRIBUTE_ID" type="number(38)"/>-->
+        <!--</createTable>-->
+        <!--<addNotNullConstraint columnDataType="number(38)" columnName="LIST_ID" tableName="LIST_TYPE"/>-->
+        <!--<addPrimaryKey columnNames="LIST_ID" tableName="LIST_TYPE"/>-->
 
         <createTable tableName="OBJECT_TYPE_ATTRIBUTES">
             <column name="OBJECT_TYPE_ID" type="number(38)"/>
@@ -178,12 +178,12 @@
                 referencedTableName="DBOBJECTS"
                 referencedColumnNames="OBJECT_ID"/>
 
-        <addForeignKeyConstraint
-                baseTableName="PARAMETERS"
-                baseColumnNames="LIST_VALUE"
-                constraintName="FK_L3Key9"
-                referencedTableName="LIST_TYPE"
-                referencedColumnNames="LIST_ID"/>
+        <!--<addForeignKeyConstraint-->
+                <!--baseTableName="PARAMETERS"-->
+                <!--baseColumnNames="LIST_VALUE"-->
+                <!--constraintName="FK_L3Key9"-->
+                <!--referencedTableName="LIST_TYPE"-->
+                <!--referencedColumnNames="LIST_ID"/>-->
 
         <addForeignKeyConstraint
                 baseTableName="PARAMETERS"
