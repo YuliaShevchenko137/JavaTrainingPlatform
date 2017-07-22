@@ -10,7 +10,6 @@
         <module>database</module>
         <module>web</module>
         <module>file-system</module>
-        <module>xml</module>
     </modules>
     <name>java-training-platform</name>
 
